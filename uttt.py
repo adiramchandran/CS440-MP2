@@ -16,6 +16,7 @@ class ultimateTicTacToe:
                     ['_','_','_','_','_','_','_','_','_'],
                     ['_','_','_','_','_','_','_','_','_'],
                     ['_','_','_','_','_','_','_','_','_']]
+        self.int_winners = [['N', 'N', 'N'], ['N', 'N', 'N'], ['N', 'N', 'N']]
         self.maxPlayer='X'
         self.minPlayer='O'
         self.maxDepth=3
@@ -84,8 +85,18 @@ class ultimateTicTacToe:
                         on the board.
         """
         #YOUR CODE HERE
-        movesLeft=True
-        return movesLeft
+        """
+        function isMovesLeft(board):
+            for each cell in board:
+                if current cell is empty:
+                    return true
+            return false
+        """
+        for i in range(len(self.board)):
+            for j in range(len(self.board[0])):
+                if self.board[i][j] == '-':
+                    return True
+        return False
 
     def checkWinner(self):
         #Return termimnal node status for maximizer player 1-win,0-tie,-1-lose
