@@ -143,6 +143,10 @@ class ultimateTicTacToe:
         """
         #YOUR CODE HERE
         bestValue=0.0
+        if checkMovesLeft(self) == False:
+            return self.board[currBoardIdx]
+        
+
         return bestValue
 
     def playGamePredifinedAgent(self,maxFirst,isMinimaxOffensive,isMinimaxDefensive):
