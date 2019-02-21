@@ -298,8 +298,14 @@ class ultimateTicTacToe:
         bestValue(float):the bestValue that current player may have
         """
         #YOUR CODE HERE
-        if depth == maxDepth:
-            return 
+        score = evaluatePredifined(self, isMax)
+        if score == 10000:
+            return score
+        if score == -10000:
+            return score
+        if checkMovesLeft(self) == False:
+            return score
+        
         if isMax:
             bestValue = float('-inf')
             startIndex = globalIdx[currBoardIdx]
