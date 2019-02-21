@@ -26,6 +26,10 @@ class ultimateTicTacToe:
         self.startBoardIdx=4
         #self.startBoardIdx=randint(0,8)
 
+        #scores for offensive and defensive player
+        self.offensivePlayerScore = 0
+        self.defensivePlayerScore = 0
+        
         #utility value for reflex offensive and reflex defensive agents
         self.winnerMaxUtility=10000
         self.twoInARowMaxUtility=500
@@ -281,8 +285,10 @@ class ultimateTicTacToe:
                      Return -1 if miniPlayer is the winner.
         """
         #YOUR CODE HERE
-        winner=0
-        return 0
+        if self.winnerMaxUtility == self.winnerMinUtility:
+            return 0
+        elif self.
+        
 
     def alphabeta(self,depth,currBoardIdx,alpha,beta,isMax):
         """
