@@ -360,6 +360,47 @@ class ultimateTicTacToe:
                             self.bestMove = (i + startIndex[0], j + startIndex[1])
                         self.board[i + startIndex[0]][j + startIndex[1]] = '_'
             return bestValue
+    
+    def findBestMove(self, currBoardIdx, player):
+        startIndex = self.globalIdx[currBoardIdx]
+        bestValue = -100000
+        if player:
+            for i in range(3):
+                for j in range(3):
+                    if self.board[i + startIndex[0]][j + startIndex[1]] == '_':
+                        self.board[i + startIndex[0]][j + startIndex[1]] = self.maxPlayer
+                        currValue = self.minimax(0, (3*j) + i, not player)
+                        self.board[i + startIndex[0]][j + startIndex[1]] = '_'
+                        if currValue > bestValue:
+                            self.bestMove = (i, j)
+                            bestValue = currValue
+        else:
+            bestValue = 100000
+            for i in range(3):
+                for j in range(3):
+                    if self.board[i + startIndex[0]][j + startIndex[1]] == '_':
+                        self.board[i + startIndex[0]][j + startIndex[1]] = self.minPlayer
+                        currValue = self.minimax(depth + 1, (3*j) + i, not player)
+                        self.board[i + startIndex[0]][j + startIndex[1]] = '_'
+                        if currValue < bestValue:
+                            self.bestMove = (i, j)
+                            bestValue = currValue
+
+    def getBoardIdx(self, top_left, potential_move):
+        """
+        This function returns the index of the large board after a potential move
+        input args:
+        top_left(tuple): tuple containing x and y coord of top left cell of current board
+        potential_move(tuple): tuple containing x and y coord of potential move
+
+        Calculate with formula that depends on indices being ordered from left to right and then top to bottom
+        """
+        return (potential_move[0] - top_left[0]) + 3*(potential_move[1] - top_left[1])
+
+    def getTopLeft(self, currIdx):
+        # This should return a tuple with the top left of a given local board
+        return self.globalIdx[currIdx]
+
 
     def playGamePredifinedAgent(self,maxFirst,isMinimaxOffensive,isMinimaxDefensive):
         """
