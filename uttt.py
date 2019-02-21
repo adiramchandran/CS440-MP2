@@ -254,12 +254,31 @@ class ultimateTicTacToe:
                      Return -1 if miniPlayer is the winner.
         """
         #YOUR CODE HERE
-        winner=0
-        if self.evaluatePredifined(self.currPlayer) > 0:
-            winner = 1
-        elif self.evaluatePredifined(self.currPlayer) < 0:
-            winner = -1
-        return winner
+        out1 = 0
+        out2 = 0
+        if self.currPlayer:
+            out1 = 1
+            out2 = -1
+        else:
+            out1 = -1
+            out2 = 1
+        if self.evaluatePredifined(self.currPlayer) == 10000:
+            return out1
+        elif self.evaluatePredifined(self.currPlayer) == -10000:
+            return out1
+        elif self.evaluatePredifined(not self.currPlayer) == 10000:
+            return out2
+        elif self.evaluatePredifined(not self.currPlayer) == -10000:
+            return out2
+        else:
+            a = abs(self.evaluatePredifined(self.currPlayer))
+            b = abs(self.evaluatePredifined(not self.currPlayer))
+            if a > b:
+                return out1
+            elif b > a:
+                return out2
+            else:
+                return 0
 
     def alphabeta(self,depth,currBoardIdx,alpha,beta,isMax):
         """
@@ -444,13 +463,18 @@ class ultimateTicTacToe:
         bestMoveArr=[]
         expandedNodes = []
         currIdx = self.startBoardIdx
+        winner = 0
 
         if maxFirst:
             self.currPlayer = True
         else:
             self.currPlayer = False
         while True:
-            if (abs(self.evaluatePredifined(self.currPlayer)) == 10000) or (self.checkMovesLeft() == False):
+            if self.evaluatePredifined(not self.currPlayer) == 10000:
+                return gameBoards, bestMoveArr, expandedNodes, bestValue, self.checkWinner()
+            if self.evaluatePredifined(not self.currPlayer) == -10000:
+                return gameBoards, bestMoveArr, expandedNodes, bestValue, self.checkWinner()
+            if self.checkMovesLeft() == False:
                 return gameBoards, bestMoveArr, expandedNodes, bestValue, self.checkWinner()
             if self.currPlayer:
                 if isMinimaxOffensive:
@@ -466,13 +490,15 @@ class ultimateTicTacToe:
                     if bestMoveVal == 10000:
                         return gameBoards, bestMoveArr, expandedNodes, bestValue, 1
                 top_left = self.getTopLeft(currIdx)
+                """
                 print("Top Left: ")
                 print(top_left)
                 print("Potential move")
                 print(self.bestMove)
+                """
                 currIdx = self.getBoardIdx(top_left, self.bestMove)
-                print("Curr Idx")
-                print(currIdx)
+                # print("Curr Idx")
+                # print(currIdx)
                 bestMoveArr.append(self.bestMove)
                 bestValue.append(bestMoveVal)
                 self.board[self.bestMove[0]][self.bestMove[1]] = self.maxPlayer
@@ -493,13 +519,14 @@ class ultimateTicTacToe:
                         return gameBoards, bestMoveArr, expandedNodes, bestValue, -1
                 top_left = self.getTopLeft(currIdx)
                 currIdx = self.getBoardIdx(top_left, self.bestMove)
-                print(currIdx)
+                # print(currIdx)
                 bestMoveArr.append(self.bestMove)        
                 bestValue.append(bestMoveVal)
                 self.board[self.bestMove[0]][self.bestMove[1]] = self.minPlayer
                 gameBoards.append(self.board)
                 self.printGameBoard()
                 self.currPlayer = not self.currPlayer
+
         
         return gameBoards, bestMoveArr, expandedNodes, bestValue, winner
 
@@ -535,11 +562,14 @@ class ultimateTicTacToe:
 
 if __name__=="__main__":
     uttt=ultimateTicTacToe()
-    gameBoards, bestMove, expandedNodes, bestValue, winner=uttt.playGamePredifinedAgent(True,True,True)
+    gameBoards, bestMove, expandedNodes, bestValue, winner=uttt.playGamePredifinedAgent(True,False,True)
+    print("The number of expanded nodes: ")
+    print(len(expandedNodes))
     if winner == 1:
         uttt.printGameBoard()
         print("The winner is maxPlayer!!!")
     elif winner == -1:
+        uttt.printGameBoard()
         print("The winner is minPlayer!!!")
     else:
         print("Tie. No winner:(")
