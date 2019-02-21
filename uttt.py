@@ -74,12 +74,7 @@ class ultimateTicTacToe:
                evaluateLocalBoard(self, 0, 6, 'X') == 10000 or evaluateLocalBoard(self, 3, 6, 'X') == 10000 or
                evaluateLocalBoard(self, 6, 6, 'X') == 10000:
                return 10000
-           else:
-               score += evaluateLocalBoard(self, 0, 0, 'X') + evaluateLocalBoard(self, 3, 0, 'X') +
-                        evaluateLocalBoard(self, 6, 0, 'X') + evaluateLocalBoard(self, 0, 3, 'X') +
-                        evaluateLocalBoard(self, 3, 3, 'X') + evaluateLocalBoard(self, 6, 3, 'X') +
-                        evaluateLocalBoard(self, 0, 6, 'X') + evaluateLocalBoard(self, 3, 6, 'X') +
-                        evaluateLocalBoard(self, 6, 6, 'X')
+           
         # min player
         else:
             if evaluateLocalBoard(self, 0, 0, 'O') == 10000 or evaluateLocalBoard(self, 3, 0, 'O') == 10000 or
@@ -88,13 +83,18 @@ class ultimateTicTacToe:
                evaluateLocalBoard(self, 0, 6, 'O') == 10000 or evaluateLocalBoard(self, 3, 6, 'O') == 10000 or
                evaluateLocalBoard(self, 6, 6, 'O') == 10000:
                return -10000
-           else:
-               score += evaluateLocalBoard(self, 0, 0, 'O') + evaluateLocalBoard(self, 3, 0, 'O') +
-                        evaluateLocalBoard(self, 6, 0, 'O') + evaluateLocalBoard(self, 0, 3, 'O') +
-                        evaluateLocalBoard(self, 3, 3, 'O') + evaluateLocalBoard(self, 6, 3, 'O') +
-                        evaluateLocalBoard(self, 0, 6, 'O') + evaluateLocalBoard(self, 3, 6, 'O') +
-                        evaluateLocalBoard(self, 6, 6, 'O')
-               score *= -1
+
+        # no definite winner, so compare other rules' scores for max and min players
+        score += evaluateLocalBoard(self, 0, 0, 'X') + evaluateLocalBoard(self, 3, 0, 'X') +
+                 evaluateLocalBoard(self, 6, 0, 'X') + evaluateLocalBoard(self, 0, 3, 'X') +
+                 evaluateLocalBoard(self, 3, 3, 'X') + evaluateLocalBoard(self, 6, 3, 'X') +
+                 evaluateLocalBoard(self, 0, 6, 'X') + evaluateLocalBoard(self, 3, 6, 'X') +
+                 evaluateLocalBoard(self, 6, 6, 'X')
+        score -= evaluateLocalBoard(self, 0, 0, 'O') + evaluateLocalBoard(self, 3, 0, 'O') +
+                 evaluateLocalBoard(self, 6, 0, 'O') + evaluateLocalBoard(self, 0, 3, 'O') +
+                 evaluateLocalBoard(self, 3, 3, 'O') + evaluateLocalBoard(self, 6, 3, 'O') +
+                 evaluateLocalBoard(self, 0, 6, 'O') + evaluateLocalBoard(self, 3, 6, 'O') +
+                 evaluateLocalBoard(self, 6, 6, 'O')
         return score
 
     def evaluateLocalBoard(self, row_start, col_start, player):
@@ -282,7 +282,11 @@ class ultimateTicTacToe:
         """
         #YOUR CODE HERE
         winner=0
-        return 0
+        if evaluatePredifined(self, self.currPlayer) > 0:
+            winner = 1
+        else if evaluatePredifined(self, self.currPlayer) < 0:
+            winner = -1
+        return winner
 
     def alphabeta(self,depth,currBoardIdx,alpha,beta,isMax):
         """
@@ -383,7 +387,7 @@ class ultimateTicTacToe:
                         True for maxPlayer plays first, and False for minPlayer plays first.
         isMinimaxOffensive(bool):boolean variable indicates whether it's using minimax or alpha-beta pruning algorithm for offensive agent.
                         True is minimax and False is alpha-beta.
-        isMinimaxOffensive(bool):boolean variable indicates whether it's using minimax or alpha-beta pruning algorithm for defensive agent.
+        isMinimaxDefensive(bool):boolean variable indicates whether it's using minimax or alpha-beta pruning algorithm for defensive agent.
                         True is minimax and False is alpha-beta.
         output:
         bestMove(list of tuple): list of bestMove coordinates at each step
@@ -397,6 +401,7 @@ class ultimateTicTacToe:
         bestValue=[]
         gameBoards=[]
         winner=0
+
         return gameBoards, bestMove, expandedNodes, bestValue, winner
 
     def playGameYourAgent(self):
