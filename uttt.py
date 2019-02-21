@@ -21,7 +21,7 @@ class ultimateTicTacToe:
         self.maxDepth=3
         self.bestMove = (-1, -1)
         #The start indexes of each local board
-        self.globalIdx=[(0,0),(0,3),(0,6),(3,0),(3,3),(3,6),(6,0),(6,3),(6,6)]
+        self.globalIdx=[(0,0),(3,0),(6,0),(0,3),(3,3),(6,3),(0,6),(3,6),(6,6)]
 
         #Start local board index for reflex agent playing
         self.startBoardIdx=4
@@ -405,7 +405,7 @@ class ultimateTicTacToe:
                 bestValue.append(bestMoveVal)
                 self.board[self.bestMove[0]][self.bestMove[1]] = self.maxPlayer
                 gameBoards.append(self.board)
-                print(self.board)
+                self.printGameBoard()
                 self.currPlayer = not self.currPlayer
             else:
                 if isMinimaxDefensive:
@@ -420,7 +420,7 @@ class ultimateTicTacToe:
                 bestValue.append(bestMoveVal)
                 self.board[self.bestMove[0]][self.bestMove[1]] = self.minPlayer
                 gameBoards.append(self.board)
-                print(self.board)
+                self.printGameBoard()
                 self.currPlayer = not self.currPlayer
         
         return gameBoards, bestMoveArr, expandedNodes, bestValue, winner
