@@ -232,10 +232,10 @@ class ultimateTicTacToe:
             corners += 1
         if self.board[row_start][col_start+2] == player:
             corners += 1
-        if (self.board[row_start+2][col_start+2] == player:
+        if self.board[row_start+2][col_start+2] == player:
             corners += 1
 
-        return (corners * 30)
+        return corners * 30
 
     def evaluateDesigned(self, isMax):
         """
