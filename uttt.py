@@ -380,7 +380,7 @@ class ultimateTicTacToe:
                 for j in range(3):
                     if self.board[i + startIndex[0]][j + startIndex[1]] == '_':
                         self.board[i + startIndex[0]][j + startIndex[1]] = self.minPlayer
-                        currValue = self.minimax(depth + 1, (3*j) + i, not player)
+                        currValue = self.minimax(0, (3*j) + i, not player)
                         self.board[i + startIndex[0]][j + startIndex[1]] = '_'
                         if currValue < bestValue:
                             self.bestMove = (i, j)
