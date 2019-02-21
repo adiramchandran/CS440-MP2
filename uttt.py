@@ -255,9 +255,9 @@ class ultimateTicTacToe:
         """
         #YOUR CODE HERE
         winner=0
-        if evaluatePredifined(self, self.currPlayer) > 0:
+        if self.evaluatePredifined(self.currPlayer) > 0:
             winner = 1
-        elif evaluatePredifined(self, self.currPlayer) < 0:
+        elif self.evaluatePredifined(self.currPlayer) < 0:
             winner = -1
         return winner
 
@@ -431,7 +431,7 @@ class ultimateTicTacToe:
         else:
             self.currPlayer = False
         while True:
-            if self.checkMovesLeft() == False:
+            if (abs(self.evaluatePredifined(self.currPlayer)) == 10000) or (self.checkMovesLeft() == False):
                 return gameBoards, bestMoveArr, expandedNodes, bestValue, self.checkWinner()
             if self.currPlayer:
                 if isMinimaxOffensive:
