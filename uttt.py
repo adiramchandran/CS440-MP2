@@ -292,10 +292,10 @@ class ultimateTicTacToe:
                 for j in range(0, 3):
                     if self.board[i + startIndex[0]][j + startIndex[1]] == '_':
                         self.board[i + startIndex[0]][j + startIndex[1]] = self.maxPlayer
-                        currValue = max(score, minimax(self, depth + 1, (3*j) + i, alpha, beta, not isMax))
+                        currValue = max(score, self.alphabeta(depth + 1, (3*j) + i, alpha, beta, not isMax))
                         if (currValue > bestValue):
                             bestValue = currValue
-                        self.board[i + startIndex[0]][j + startIndex[1]] = self.maxPlayer
+                        self.board[i + startIndex[0]][j + startIndex[1]] = '_'
                         alpha = max(alpha, bestValue)
                         if beta <= alpha:
                             break
@@ -309,10 +309,10 @@ class ultimateTicTacToe:
                 for j in range(0, 3):
                     if self.board[i + startIndex[0]][j + startIndex[1]] == '_':
                         self.board[i + startIndex[0]][j + startIndex[1]] = self.minPlayer
-                        currValue = min(score, minimax(self, depth + 1, (3*j) + i, alpha, beta, not isMax))
-                         if (currValue < bestValue):
+                        currValue = min(score, self.alphabeta(depth + 1, (3*j) + i, alpha, beta, not isMax))
+                        if currValue < bestValue:
                             bestValue = currValue
-                        self.board[i + startIndex[0]][j + startIndex[1]] = self.maxPlayer
+                        self.board[i + startIndex[0]][j + startIndex[1]] = '_'
                         alpha = min(alpha, bestValue)
                         if beta <= alpha:
                             break
