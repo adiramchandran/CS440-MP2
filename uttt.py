@@ -359,7 +359,8 @@ class ultimateTicTacToe:
                         self.board[i + startIndex[0]][j + startIndex[1]] = '_'
             return bestValue
 
-    def findBestMove(self, currBoardIdx, player):
+    def findBestMove(self, currBoardIdx, player, alg_flag):
+        # alg_flag: 0 for minimax and 1 for alphabeta
         startIndex = self.globalIdx[currBoardIdx]
         bestValue = 0
         if player:
@@ -368,7 +369,11 @@ class ultimateTicTacToe:
                 for j in range(3):
                     if self.board[i + startIndex[0]][j + startIndex[1]] == '_':
                         self.board[i + startIndex[0]][j + startIndex[1]] = self.maxPlayer
-                        currValue = self.minimax(0, (3*j) + i, not player)
+                        currValue = float('-inf')
+                        if (alg_flag):
+                            currValue = self.alphabeta(0, currBoardIdx, float('-inf'), float('inf'), not player)
+                        else:
+                            currValue = self.minimax(0, (3*j) + i, not player)
                         self.board[i + startIndex[0]][j + startIndex[1]] = '_'
                         if currValue > bestValue:
                             self.bestMove = (i + startIndex[0], j + startIndex[1])
@@ -379,7 +384,11 @@ class ultimateTicTacToe:
                 for j in range(3):
                     if self.board[i + startIndex[0]][j + startIndex[1]] == '_':
                         self.board[i + startIndex[0]][j + startIndex[1]] = self.minPlayer
-                        currValue = self.minimax(0, (3*j) + i, not player)
+                        currValue = float('inf')
+                        if (alg_flag):
+                            currValue = self.alphabeta(0, currBoardIdx, float('-inf'), float('inf'), not player)
+                        else:
+                            currValue = self.minimax(0, (3*j) + i, not player)
                         self.board[i + startIndex[0]][j + startIndex[1]] = '_'
                         if currValue < bestValue:
                             self.bestMove = (i + startIndex[0], j + startIndex[1])
@@ -436,13 +445,13 @@ class ultimateTicTacToe:
             if self.currPlayer:
                 if isMinimaxOffensive:
                     # # # bestMoveVal = self.minimax(0, 4, True)
-                    bestMoveVal = self.findBestMove(currIdx, self.currPlayer)
+                    bestMoveVal = self.findBestMove(currIdx, self.currPlayer, 0)     # 0 is for minimax
                     # SHOULD PROBABLY APPEND BESTMOVEVAL TO THE ARRAY BEFORE RETURNING
                     if bestMoveVal == 10000:
                         return gameBoards, bestMoveArr, expandedNodes, bestValue, 1
                 else:
                     # NOT SURE WHAT TO DO FOR THE ALPHABETA THING YET (MAYBE PASS AN ALPHA/MINIMAX PARAM TO FINDBESTMOVE)
-                    bestMoveVal = self.alphabeta(0, currIdx, float('-inf'), float('inf'), True)
+                    bestMoveVal = self.findBestMove(currIdx, self.currPlayer, 1)     # 1 is for alphabeta
                     # SHOULD PROBABLY APPEND BESTMOVEVAL TO ARRAY BEFORE RETURNING
                     if bestMoveVal == 10000:
                         return gameBoards, bestMoveArr, expandedNodes, bestValue, 1
@@ -463,13 +472,13 @@ class ultimateTicTacToe:
             else:
                 if isMinimaxDefensive:
                     # # # bestMoveVal = self.minimax(0, 4, False)
-                    bestMoveVal = self.findBestMove(currIdx, self.currPlayer)
+                    bestMoveVal = self.findBestMove(currIdx, self.currPlayer, 0)     # 0 is for minimax
                     # SHOULD PROBABLY APPEND TO VAL LIST
                     if bestMoveVal == -10000:
                         return gameBoards, bestMoveArr, expandedNodes, bestValue, -1
                 else:
                     # SEE ABOVE COMMENT FOR ALPHABETA
-                    bestMoveVal = self.alphabeta(0, 4, float('-inf'), float('inf'), False)
+                    bestMoveVal = self.findBestMove(currIdx, self.currPlayer, 1)     # 1 is for alphabeta
                     if bestMoveVal == -10000:
                         return gameBoards, bestMoveArr, expandedNodes, bestValue, -1
                 top_left = self.getTopLeft(currIdx)
