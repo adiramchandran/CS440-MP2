@@ -459,6 +459,7 @@ if __name__=="__main__":
     uttt=ultimateTicTacToe()
     gameBoards, bestMove, expandedNodes, bestValue, winner=uttt.playGamePredifinedAgent(True,True,True)
     if winner == 1:
+        uttt.printGameBoard()
         print("The winner is maxPlayer!!!")
     elif winner == -1:
         print("The winner is minPlayer!!!")
