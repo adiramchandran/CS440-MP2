@@ -360,7 +360,7 @@ class ultimateTicTacToe:
                             self.bestMove = (i + startIndex[0], j + startIndex[1])
                         self.board[i + startIndex[0]][j + startIndex[1]] = '_'
             return bestValue
-    
+
     def findBestMove(self, currBoardIdx, player):
         startIndex = self.globalIdx[currBoardIdx]
         bestValue = -100000
@@ -385,6 +385,7 @@ class ultimateTicTacToe:
                         if currValue < bestValue:
                             self.bestMove = (i, j)
                             bestValue = currValue
+        return bestValue
 
     def getBoardIdx(self, top_left, potential_move):
         """
@@ -432,14 +433,19 @@ class ultimateTicTacToe:
             self.currPlayer = False
         while True:
             if self.checkMovesLeft() == False:
+                # WHY DOES THE LINE BELOW JUST MAKE MAXPLAYER THE WINNER
                 return gameBoards, bestMoveArr, expandedNodes, bestValue, 1
             if self.currPlayer:
                 if isMinimaxOffensive:
-                    bestMoveVal = self.minimax(0, 4, True)
+                    # # # bestMoveVal = self.minimax(0, 4, True)
+                    bestMoveVal = self.findBestMove(4, self.currPlayer)
+                    # SHOULD PROBABLY APPEND BESTMOVEVAL TO THE ARRAY BEFORE RETURNING
                     if bestMoveVal == 10000:
                         return gameBoards, bestMoveArr, expandedNodes, bestValue, 1
                 else:
+                    # NOT SURE WHAT TO DO FOR THE ALPHABETA THING YET (MAYBE PASS AN ALPHA/MINIMAX PARAM TO FINDBESTMOVE)
                     bestMoveVal = self.alphabeta(0, 4, float('-inf'), float('inf'), True)
+                    # SHOULD PROBABLY APPEND BESTMOVEVAL TO ARRAY BEFORE RETURNING
                     if bestMoveVal == 10000:
                         return gameBoards, bestMoveArr, expandedNodes, bestValue, 1
                 bestMoveArr.append(self.bestMove)
@@ -450,10 +456,13 @@ class ultimateTicTacToe:
                 self.currPlayer = not self.currPlayer
             else:
                 if isMinimaxDefensive:
-                    bestMoveVal = self.minimax(0, 4, False)
+                    # # # bestMoveVal = self.minimax(0, 4, False)
+                    bestMoveVal = self.findBestMove(4, self.currPlayer)
+                    # SHOULD PROBABLY APPEND TO VAL LIST
                     if bestMoveVal == -10000:
                         return gameBoards, bestMoveArr, expandedNodes, bestValue, -1
                 else:
+                    # SEE ABOVE COMMENT FOR ALPHABETA
                     bestMoveVal = self.alphabeta(0, 4, float('-inf'), float('inf'), False)
                     if bestMoveVal == -10000:
                         return gameBoards, bestMoveArr, expandedNodes, bestValue, -1
