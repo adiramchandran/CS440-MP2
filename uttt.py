@@ -284,25 +284,35 @@ class ultimateTicTacToe:
             return score
         
         if isMax:
+            if depth == 3:
+                return float('-inf')
             bestValue = float('-inf')
             startIndex = self.globalIdx[currBoardIdx]
             for i in range(0, 3):
                 for j in range(0, 3):
                     if self.board[i + startIndex[0]][j + startIndex[1]] == '_':
                         self.board[i + startIndex[0]][j + startIndex[1]] = self.maxPlayer
-                        bestValue = max(bestValue, minimax(self, depth + 1, (3*j) + i, alpha, beta, not isMax))
+                        currValue = max(score, minimax(self, depth + 1, (3*j) + i, alpha, beta, not isMax))
+                        if (currValue > bestValue):
+                            bestValue = currValue
+                        self.board[i + startIndex[0]][j + startIndex[1]] = self.maxPlayer
                         alpha = max(alpha, bestValue)
                         if beta <= alpha:
                             break
             return bestValue
         else:
+            if depth == 3:
+                return float('inf')
             bestValue = float('inf')
             startIndex = self.globalIdx[currBoardIdx]
             for i in range(0, 3):
                 for j in range(0, 3):
                     if self.board[i + startIndex[0]][j + startIndex[1]] == '_':
                         self.board[i + startIndex[0]][j + startIndex[1]] = self.minPlayer
-                        bestValue = max(bestValue, minimax(self, depth + 1, (3*j) + i, alpha, beta, not isMax))
+                        currValue = min(score, minimax(self, depth + 1, (3*j) + i, alpha, beta, not isMax))
+                         if (currValue < bestValue):
+                            bestValue = currValue
+                        self.board[i + startIndex[0]][j + startIndex[1]] = self.maxPlayer
                         alpha = min(alpha, bestValue)
                         if beta <= alpha:
                             break
