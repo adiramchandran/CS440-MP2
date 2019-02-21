@@ -448,7 +448,12 @@ class ultimateTicTacToe:
                     if bestMoveVal == 10000:
                         return gameBoards, bestMoveArr, expandedNodes, bestValue, 1
                 top_left = self.getTopLeft(currIdx)
+                print("Top Left: ")
+                print(top_left)
+                print("Potential move")
+                print(self.bestMove)
                 currIdx = self.getBoardIdx(top_left, self.bestMove)
+                print("Curr Idx")
                 print(currIdx)
                 bestMoveArr.append(self.bestMove)
                 bestValue.append(bestMoveVal)
