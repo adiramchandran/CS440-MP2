@@ -81,19 +81,19 @@ class ultimateTicTacToe:
                         evaluateLocalBoard(self, 0, 6, 'X') + evaluateLocalBoard(self, 3, 6, 'X') +
                         evaluateLocalBoard(self, 6, 6, 'X')
         # min player
-        if !isMax:
-            if evaluateLocalBoard(self, 0, 0, 'X') == 10000 or evaluateLocalBoard(self, 3, 0, 'X') == 10000 or
-               evaluateLocalBoard(self, 6, 0, 'X') == 10000 or evaluateLocalBoard(self, 0, 3, 'X') == 10000 or
-               evaluateLocalBoard(self, 3, 3, 'X') == 10000 or evaluateLocalBoard(self, 6, 3, 'X') == 10000 or
-               evaluateLocalBoard(self, 0, 6, 'X') == 10000 or evaluateLocalBoard(self, 3, 6, 'X') == 10000 or
-               evaluateLocalBoard(self, 6, 6, 'X') == 10000:
+        else:
+            if evaluateLocalBoard(self, 0, 0, 'O') == 10000 or evaluateLocalBoard(self, 3, 0, 'O') == 10000 or
+               evaluateLocalBoard(self, 6, 0, 'O') == 10000 or evaluateLocalBoard(self, 0, 3, 'O') == 10000 or
+               evaluateLocalBoard(self, 3, 3, 'O') == 10000 or evaluateLocalBoard(self, 6, 3, 'O') == 10000 or
+               evaluateLocalBoard(self, 0, 6, 'O') == 10000 or evaluateLocalBoard(self, 3, 6, 'O') == 10000 or
+               evaluateLocalBoard(self, 6, 6, 'O') == 10000:
                return -10000
            else:
-               score += evaluateLocalBoard(self, 0, 0, 'X') + evaluateLocalBoard(self, 3, 0, 'X') +
-                        evaluateLocalBoard(self, 6, 0, 'X') + evaluateLocalBoard(self, 0, 3, 'X') +
-                        evaluateLocalBoard(self, 3, 3, 'X') + evaluateLocalBoard(self, 6, 3, 'X') +
-                        evaluateLocalBoard(self, 0, 6, 'X') + evaluateLocalBoard(self, 3, 6, 'X') +
-                        evaluateLocalBoard(self, 6, 6, 'X')
+               score += evaluateLocalBoard(self, 0, 0, 'O') + evaluateLocalBoard(self, 3, 0, 'O') +
+                        evaluateLocalBoard(self, 6, 0, 'O') + evaluateLocalBoard(self, 0, 3, 'O') +
+                        evaluateLocalBoard(self, 3, 3, 'O') + evaluateLocalBoard(self, 6, 3, 'O') +
+                        evaluateLocalBoard(self, 0, 6, 'O') + evaluateLocalBoard(self, 3, 6, 'O') +
+                        evaluateLocalBoard(self, 6, 6, 'O')
                score *= -1
         return score
 
@@ -298,8 +298,32 @@ class ultimateTicTacToe:
         bestValue(float):the bestValue that current player may have
         """
         #YOUR CODE HERE
-        bestValue=0.0
-        return bestValue
+        if depth == maxDepth:
+            return 
+        if isMax:
+            bestValue = float('-inf')
+            startIndex = globalIdx[currBoardIdx]
+            for i in range(0, 3):
+                for j in range(0, 3):
+                    if self.board[i + startIndex[0]][j + startIndex[1]] == '_':
+                        self.board[i + startIndex[0]][j + startIndex[1]] = maxPlayer
+                        bestValue = max(bestValue, minimax(self, depth + 1, (3*j) + i, alpha, beta, !isMax))
+                        alpha = max(alpha, bestValue)
+                        if beta <= alpha:
+                            break
+            return bestValue
+        else:
+            bestValue = float('inf')
+            startIndex = globalIdx[currBoardIdx]
+            for i in range(0, 3):
+                for j in range(0, 3):
+                    if self.board[i + startIndex[0]][j + startIndex[1]] == '_':
+                        self.board[i + startIndex[0]][j + startIndex[1]] = maxPlayer
+                        bestValue = max(bestValue, minimax(self, depth + 1, (3*j) + i, alpha, beta, !isMax))
+                        alpha = min(alpha, bestValue)
+                        if beta <= alpha:
+                            break
+            return bestValue
 
     def minimax(self, depth, currBoardIdx, isMax):
         """
