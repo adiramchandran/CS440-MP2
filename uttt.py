@@ -19,6 +19,7 @@ class ultimateTicTacToe:
         self.maxPlayer='X'
         self.minPlayer='O'
         self.maxDepth=3
+        self.bestMove = (-1, -1)
         #The start indexes of each local board
         self.globalIdx=[(0,0),(0,3),(0,6),(3,0),(3,3),(3,6),(6,0),(6,3),(6,6)]
 
@@ -74,7 +75,12 @@ class ultimateTicTacToe:
                evaluateLocalBoard(self, 0, 6, 'X') == 10000 or evaluateLocalBoard(self, 3, 6, 'X') == 10000 or
                evaluateLocalBoard(self, 6, 6, 'X') == 10000:
                return 10000
-           
+           else:
+               score += evaluateLocalBoard(self, 0, 0, 'X') + evaluateLocalBoard(self, 3, 0, 'X') +
+                        evaluateLocalBoard(self, 6, 0, 'X') + evaluateLocalBoard(self, 0, 3, 'X') +
+                        evaluateLocalBoard(self, 3, 3, 'X') + evaluateLocalBoard(self, 6, 3, 'X') +
+                        evaluateLocalBoard(self, 0, 6, 'X') + evaluateLocalBoard(self, 3, 6, 'X') +
+                        evaluateLocalBoard(self, 6, 6, 'X')
         # min player
         else:
             if evaluateLocalBoard(self, 0, 0, 'O') == 10000 or evaluateLocalBoard(self, 3, 0, 'O') == 10000 or
@@ -83,18 +89,13 @@ class ultimateTicTacToe:
                evaluateLocalBoard(self, 0, 6, 'O') == 10000 or evaluateLocalBoard(self, 3, 6, 'O') == 10000 or
                evaluateLocalBoard(self, 6, 6, 'O') == 10000:
                return -10000
-
-        # no definite winner, so compare other rules' scores for max and min players
-        score += evaluateLocalBoard(self, 0, 0, 'X') + evaluateLocalBoard(self, 3, 0, 'X') +
-                 evaluateLocalBoard(self, 6, 0, 'X') + evaluateLocalBoard(self, 0, 3, 'X') +
-                 evaluateLocalBoard(self, 3, 3, 'X') + evaluateLocalBoard(self, 6, 3, 'X') +
-                 evaluateLocalBoard(self, 0, 6, 'X') + evaluateLocalBoard(self, 3, 6, 'X') +
-                 evaluateLocalBoard(self, 6, 6, 'X')
-        score -= evaluateLocalBoard(self, 0, 0, 'O') + evaluateLocalBoard(self, 3, 0, 'O') +
-                 evaluateLocalBoard(self, 6, 0, 'O') + evaluateLocalBoard(self, 0, 3, 'O') +
-                 evaluateLocalBoard(self, 3, 3, 'O') + evaluateLocalBoard(self, 6, 3, 'O') +
-                 evaluateLocalBoard(self, 0, 6, 'O') + evaluateLocalBoard(self, 3, 6, 'O') +
-                 evaluateLocalBoard(self, 6, 6, 'O')
+           else:
+               score += evaluateLocalBoard(self, 0, 0, 'O') + evaluateLocalBoard(self, 3, 0, 'O') +
+                        evaluateLocalBoard(self, 6, 0, 'O') + evaluateLocalBoard(self, 0, 3, 'O') +
+                        evaluateLocalBoard(self, 3, 3, 'O') + evaluateLocalBoard(self, 6, 3, 'O') +
+                        evaluateLocalBoard(self, 0, 6, 'O') + evaluateLocalBoard(self, 3, 6, 'O') +
+                        evaluateLocalBoard(self, 6, 6, 'O')
+               score *= -1
         return score
 
     def evaluateLocalBoard(self, row_start, col_start, player):
@@ -284,7 +285,7 @@ class ultimateTicTacToe:
         winner=0
         if evaluatePredifined(self, self.currPlayer) > 0:
             winner = 1
-        else if evaluatePredifined(self, self.currPlayer) < 0:
+        elif evaluatePredifined(self, self.currPlayer) < 0:
             winner = -1
         return winner
 
@@ -347,6 +348,7 @@ class ultimateTicTacToe:
         bestValue(float):the bestValue that current player may have
         """
         #YOUR CODE HERE
+
         score = evaluatePredifined(self, isMax)
         if score == 10000:
             return score
@@ -356,26 +358,34 @@ class ultimateTicTacToe:
             return score
 
         if isMax:
+            if depth == 3:
+                return float('-inf')
             bestValue = float('-inf')
             startIndex = globalIdx[currBoardIdx]
             for i in range(0, 3):
                 for j in range(0, 3):
                     if self.board[i + startIndex[0]][j + startIndex[1]] == '_':
                         self.board[i + startIndex[0]][j + startIndex[1]] = maxPlayer
-                        if (depth < 3):
-                            bestValue = max(bestValue, minimax(self.board, depth + 1, (3*j) + i, !isMax))
+                        currVal = minimax(self.board, depth + 1, (3*j) + i, !isMax)
+                        if (currVal > bestValue):
+                            bestValue = currValue
+                            self.bestMove = (i + startIndex[0], j + startIndex[1])
                         board[i + startIndex[0]][j + startIndex[1]] = '_'
             return bestValue
 
         else:
-            bestValue = float('-inf')
+            if depth == 3:
+                return float('inf')
+            bestValue = float('inf')
             startIndex = globalIdx[currBoardIdx]
             for i in range(0, 3):
                 for j in range(0, 3):
                     if self.board[i + startIndex[0]][j + startIndex[1]] == '_':
                         self.board[i + startIndex[0]][j + startIndex[1]] = minPlayer
-                        if (depth < 3):
-                            bestValue = min(bestValue, minimax(self.board, depth + 1, (3*j) + i, !isMax))
+                        currVal = minimax(self.board, depth + 1, (3*j) + i, !isMax)
+                        if (currVal < bestValue):
+                            bestValue = currValue
+                            self.bestMove = (i + startIndex[0], j + startIndex[1])
                         board[i + startIndex[0]][j + startIndex[1]] = '_'
             return bestValue
 
@@ -387,7 +397,7 @@ class ultimateTicTacToe:
                         True for maxPlayer plays first, and False for minPlayer plays first.
         isMinimaxOffensive(bool):boolean variable indicates whether it's using minimax or alpha-beta pruning algorithm for offensive agent.
                         True is minimax and False is alpha-beta.
-        isMinimaxDefensive(bool):boolean variable indicates whether it's using minimax or alpha-beta pruning algorithm for defensive agent.
+        isMinimaxOffensive(bool):boolean variable indicates whether it's using minimax or alpha-beta pruning algorithm for defensive agent.
                         True is minimax and False is alpha-beta.
         output:
         bestMove(list of tuple): list of bestMove coordinates at each step
@@ -397,11 +407,47 @@ class ultimateTicTacToe:
         winner(int): 1 for maxPlayer is the winner, -1 for minPlayer is the winner, and 0 for tie.
         """
         #YOUR CODE HERE
-        bestMove=[]
         bestValue=[]
         gameBoards=[]
-        winner=0
+        bestMoveArr=[]
 
+        if maxFirst:
+            self.currPlayer = True
+        else:
+            self.currPlayer = False
+        while True:
+            if checkMovesLeft(self) == False:
+
+                return gameBoards, bestMove, expandedNodes, bestValue, 1
+            if self.currPlayer:
+                if isMinimaxOffensive:
+                    bestMoveVal = minimax(self, 0, 4, True)
+                    if bestMoveVal == 10000:
+                        return gameBoards, bestMove, expandedNodes, bestValue, 1
+                else:
+                    bestMoveVal = alphabeta(self, 0, 4, float('-inf'), float('inf'), True)
+                    if bestMoveVal == 10000:
+                        return gameBoards, bestMove, expandedNodes, bestValue, 1
+                bestMoveArr.append(self.bestMove)
+                bestValue.append(bestMoveVal)
+                gameBoards.append(self.board)
+                self.board[self.bestMove[0]][self.bestMove[1]] = self.maxPlayer
+                self.currPlayer = !self.currPlayer
+            else:
+                if isMinimaxDefensive:
+                    bestMoveVal = minimax(self, 0, 4, False)
+                    if bestMoveVal == -10000:
+                        return gameBoards, bestMove, expandedNodes, bestValue, -1
+                else:
+                    bestMoveVal = alphabeta(self, 0, 4, float('-inf'), float('inf'), False)
+                    if bestMoveVal == -10000:
+                        return gameBoards, bestMove, expandedNodes, bestValue, -1
+                bestMoveArr.append(self.bestMove)        
+                bestValue.append(bestMoveVal)
+                gameBoards.append(self.board)
+                self.board[self.bestMove[0]][self.bestMove[1]] = self.minPlayer
+                self.currPlayer = !self.currPlayer
+        
         return gameBoards, bestMove, expandedNodes, bestValue, winner
 
     def playGameYourAgent(self):
