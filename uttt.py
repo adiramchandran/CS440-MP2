@@ -282,7 +282,11 @@ class ultimateTicTacToe:
         """
         #YOUR CODE HERE
         winner=0
-        return 0
+        if evaluatePredifined(self, self.currPlayer) > 0:
+            winner = 1
+        else:
+            winner = -1
+        return winner
 
     def alphabeta(self,depth,currBoardIdx,alpha,beta,isMax):
         """
