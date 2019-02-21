@@ -425,7 +425,7 @@ class ultimateTicTacToe:
         gameBoards=[]
         bestMoveArr=[]
         expandedNodes = []
-
+        currIdx = self.startBoardIdx
 
         if maxFirst:
             self.currPlayer = True
@@ -433,21 +433,23 @@ class ultimateTicTacToe:
             self.currPlayer = False
         while True:
             if self.checkMovesLeft() == False:
-                # WHY DOES THE LINE BELOW JUST MAKE MAXPLAYER THE WINNER
-                return gameBoards, bestMoveArr, expandedNodes, bestValue, 1
+                return gameBoards, bestMoveArr, expandedNodes, bestValue, self.checkWinner()
             if self.currPlayer:
                 if isMinimaxOffensive:
                     # # # bestMoveVal = self.minimax(0, 4, True)
-                    bestMoveVal = self.findBestMove(4, self.currPlayer)
+                    bestMoveVal = self.findBestMove(currIdx, self.currPlayer)
                     # SHOULD PROBABLY APPEND BESTMOVEVAL TO THE ARRAY BEFORE RETURNING
                     if bestMoveVal == 10000:
                         return gameBoards, bestMoveArr, expandedNodes, bestValue, 1
                 else:
                     # NOT SURE WHAT TO DO FOR THE ALPHABETA THING YET (MAYBE PASS AN ALPHA/MINIMAX PARAM TO FINDBESTMOVE)
-                    bestMoveVal = self.alphabeta(0, 4, float('-inf'), float('inf'), True)
+                    bestMoveVal = self.alphabeta(0, currIdx, float('-inf'), float('inf'), True)
                     # SHOULD PROBABLY APPEND BESTMOVEVAL TO ARRAY BEFORE RETURNING
                     if bestMoveVal == 10000:
                         return gameBoards, bestMoveArr, expandedNodes, bestValue, 1
+                top_left = self.getTopLeft(currIdx)
+                currIdx = self.getBoardIdx(top_left, self.bestMove)
+                print(currIdx)
                 bestMoveArr.append(self.bestMove)
                 bestValue.append(bestMoveVal)
                 self.board[self.bestMove[0]][self.bestMove[1]] = self.maxPlayer
@@ -457,7 +459,7 @@ class ultimateTicTacToe:
             else:
                 if isMinimaxDefensive:
                     # # # bestMoveVal = self.minimax(0, 4, False)
-                    bestMoveVal = self.findBestMove(4, self.currPlayer)
+                    bestMoveVal = self.findBestMove(currIdx, self.currPlayer)
                     # SHOULD PROBABLY APPEND TO VAL LIST
                     if bestMoveVal == -10000:
                         return gameBoards, bestMoveArr, expandedNodes, bestValue, -1
@@ -466,6 +468,9 @@ class ultimateTicTacToe:
                     bestMoveVal = self.alphabeta(0, 4, float('-inf'), float('inf'), False)
                     if bestMoveVal == -10000:
                         return gameBoards, bestMoveArr, expandedNodes, bestValue, -1
+                top_left = self.getTopLeft(currIdx)
+                currIdx = self.getBoardIdx(top_left, self.bestMove)
+                print(currIdx)
                 bestMoveArr.append(self.bestMove)        
                 bestValue.append(bestMoveVal)
                 self.board[self.bestMove[0]][self.bestMove[1]] = self.minPlayer
