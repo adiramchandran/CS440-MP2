@@ -5,7 +5,7 @@ import numpy as np
 dominos = [np.array([[i],[i]]) for i in range(1,31)]
 triominos = [np.array([[i,0],[i,i]]) for i in range(1,21)]
 
-petnominos = [np.array([[0,1,1],
+pentominos = [np.array([[0,1,1],
                    [1,1,0],
                    [0,1,0]]),
         np.array([[2],

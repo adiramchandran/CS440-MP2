@@ -5,6 +5,7 @@ orientations = [8, 2, 8, 8, 8, 4, 4, 4, 4, 1, 8, 4]
 final_board = None
 prev_constraints = {}
 prev_choices = {}
+pent_orients = []
 
 
 def solve(board, pents):
@@ -26,7 +27,12 @@ def solve(board, pents):
 
     choices = {}                    # maps from (pentomino idx, unique orientation) to # of different coordinates an orientation can go
     constraints = {}                # maps from potential top left (row, col) coordinate to list of tuples (pent idx, unique orientation)
+    
+    for pent in pents:
+        pent_orients.append(findOrientations(pent, get_pent_idx(pent)))
+    # pent_orients should have all the possible pentominoes for the given pent_idx
 
+    i = 0 
     for pent in pents:
         pent_idx = get_pent_idx(pent)
         for orient in findOrientations(pent, pent_idx):                 # each orientation in the orientation list for a certain pentonmino
@@ -38,14 +44,17 @@ def solve(board, pents):
                             constraints[(row,col)] = []
                         constraints[(row, col)].append((pent_idx, orient))
 
-                        choice = (pent_idx, orient)
-                        if choice not in choices.keys():
-                            choices[choice] = []
+                        orient_idx = i
+                        choice = (pent_idx, orient_idx)
+                        if (pent_idx, orient_idx) not in choices.keys():
+                            choices[(pent_idx, orient_idx)] = []
 
                         choices[choice].append((row, col))
-
+            i += 1     # moving forward in pent_orients
+        i = 0
     # now we should have our choices and constraints dictionaries filled and we can backtrack
-
+    flag, ret_board = alg_back(board, choices, constraints)
+    return ret_board
 
 def place_pent(board, pent, pent_idx, coord, constraints, choices): # does add pentomino while changing choices and constraints
     for row in range(pent.shape[0]):
@@ -61,11 +70,11 @@ def place_pent(board, pent, pent_idx, coord, constraints, choices): # does add p
                     return False
                 else:
                     board[coord[0]+row][coord[1]+col] = pent[row][col]
-                    del constraints[(row, col)]
+                    constraints[(row, col)] = None
     
     for tup in choices.keys():
         if tup[0] == pent_idx:
-            del choices[tup]
+            choices[tup] = None
 
     return True
 
@@ -83,17 +92,32 @@ def alg_back(board, choices, constraints):
     3) if it's solved (choices and constraints are both empty), return true
     - remove all coordinates in constraints that are taken up by a move
     """
-    if (not choices) and (not constraints):
+    
+    # change true base case check to go through full dicts and confirm everything is None
+    choice_flag = True
+    const_flag = True
+    for key in choices.keys():
+        if choices[key]:
+            choice_flag = False 
+            break
+    for key in constraints.keys():
+        if constraints[key]:
+            const_flag = False 
+            break
+
+    if choice_flag and const_flag:
         return True, board
 
     chosen = min(choices.keys(), key=lambda tup:len(choices[tup]))
 
     for coord in choices[chosen]:
+        if not coord:
+            continue
         prev_choices = choices
         prev_constraints = constraints
-        place_pent(board, chosen[1], chosen[0], coord, constraints, choices)
-        alg_back(board, choices, constraints)
-        rem_pent(board, chosen[1], chosen[0], coord, constraints, choices)
+        place_pent(board, pent_orients[chosen[0]][chosen[1]], chosen[0], coord, constraints, choices)
+        ret, board_ret = alg_back(board, choices, constraints)
+        rem_pent(board, pent_orients[chosen[0]][chosen[1]], chosen[0], coord, constraints, choices)
 
 
 
@@ -195,13 +219,21 @@ def can_add_pentomino(board, pent, coord):
     """
     Checks if the pentomino can be placed at the coordinate on the board.
     """
-    for row in range(pent.shape[0]):
-        for col in range(pent.shape[1]):
-            if pent[row][col] != 0:
-                if coord[0]+row >= board.shape[0] or coord[1]+col >= board.shape[1]:
+    if np.ndim(pent) == 1:
+        for row in range(pent.shape[0]):
+            if pent[row] != 0:
+                if coord[0]+row >= board.shape[0] or coord[1] >= board.shape[1]:
                     return False
-                if board[coord[0]+row][coord[1]+col] != -1: # Overlap
+                if board[coord[0]+row][coord[1]] != -1: # Overlap
                     return False
+    else:
+        for row in range(pent.shape[0]):
+            for col in range(pent.shape[1]):
+                if pent[row][col] != 0:
+                    if coord[0]+row >= board.shape[0] or coord[1]+col >= board.shape[1]:
+                        return False
+                    if board[coord[0]+row][coord[1]+col] != -1: # Overlap
+                        return False
     return True
 
 
