@@ -3,8 +3,9 @@ import numpy as np
 #               F  I  L  N  P  T  U  V  W  X  Y  Z
 orientations = [8, 2, 8, 8, 8, 4, 4, 4, 4, 1, 8, 4]
 final_board = None
-const_choices = {}
-const_constraints = {}
+prev_constraints = {}
+prev_choices = {}
+
 
 def solve(board, pents):
     """
@@ -21,7 +22,7 @@ def solve(board, pents):
     """
 
     # set up bipartite graph to begin (one for constraint, the other for all possible choices)
-    board[board==1] = float('inf')
+    board[board==1] = -1
 
     choices = {}                    # maps from (pentomino idx, unique orientation) to # of different coordinates an orientation can go
     constraints = {}                # maps from potential top left (row, col) coordinate to list of tuples (pent idx, unique orientation)
@@ -46,90 +47,56 @@ def solve(board, pents):
     # now we should have our choices and constraints dictionaries filled and we can backtrack
 
 
+def place_pent(board, pent, pent_idx, coord, constraints, choices): # does add pentomino while changing choices and constraints
+    for row in range(pent.shape[0]):
+        for col in range(pent.shape[1]):
+            if pent[row][col] != 0:
+                if coord[0]+row >= board.shape[0] or coord[1]+col >= board.shape[1]:
+                    print("error1")
+                    remove_pentomino(board, get_pent_idx(pent))
+                    return False
+                if board[coord[0]+row][coord[1]+col] != -1: # Overlap
+                    print("error")
+                    remove_pentomino(board, get_pent_idx(pent))
+                    return False
+                else:
+                    board[coord[0]+row][coord[1]+col] = pent[row][col]
+                    del constraints[(row, col)]
+    
+    for tup in choices.keys():
+        if tup[0] == pent_idx:
+            del choices[tup]
 
-def alg_x(board, choices, constraints, pents):
+    return True
+
+def rem_pent(board, pent, pent_idx, coord, constraints, choices):
+    board[board==pent_idx+1] = -1
+    choices = prev_choices
+    constraints = prev_constraints
+
+
+def alg_back(board, choices, constraints):
     """
     base cases:
     1) constraints[(row, col)] is empty list (invalid so return false)
     2) all choices[orient] for one pent idx is empty (no more places to place a certain pentomino), return false
     3) if it's solved (choices and constraints are both empty), return true
+    - remove all coordinates in constraints that are taken up by a move
     """
+    if (not choices) and (not constraints):
+        return True, board
 
-    """
-    def _solve(self):
-        if not self.unsatisfied:
-            # No remaining unsatisfied constraints.
-            yield list(self.solution)
-            return
+    chosen = min(choices.keys(), key=lambda tup:len(choices[tup]))
 
-        # Pick the constraint with the fewest remaining choices
-        # (Knuth's "S heuristic").
-        best = min(self.unsatisfied, key=lambda j:len(self.choices[j]))
-        choices = list(self.choices[best])
-        if self.random:
-            shuffle(choices)
+    for coord in choices[chosen]:
+        prev_choices = choices
+        prev_constraints = constraints
+        place_pent(board, chosen[1], chosen[0], coord, constraints, choices)
+        alg_back(board, choices, constraints)
+        rem_pent(board, chosen[1], chosen[0], coord, constraints, choices)
 
-        # Try each choice in turn and recurse.
-        for i in choices:
-            self._choose(i)
-            yield from self._solve()
-            self._unchoose(i)
 
-    def _choose(self, i):
-        Make choice i; mark constraints satisfied; and remove any
-        choices that clash with it.
 
-        self.solution.append(i)
-        for j in self.constraints[i]:
-            self.unsatisfied.remove(j)
-            for k in self.choices[j]:
-                for l in self.constraints[k]:
-                    if l != j:
-                        self.choices[l].remove(k)
-
-    def _unchoose(self, i):
-        Unmake choice i; restore constraints and choices.
-        last = self.solution.pop()
-        assert i == last
-        for j in self.constraints[i]:
-            self.unsatisfied.add(j)
-            for k in self.choices[j]:
-                for l in self.constraints[k]:
-                    if l != j:
-                        self.choices[l].add(k)
-    """
-    
-    for coord in constraints.keys():
-        
-
-    # base case, once every constraint has been satisfied
-    if (len(constraints) == 0):
-        return assignment
-
-    # var is a constraint (could be pentomino or (row,col) of board)
-    var = getNextVar(constraints)
-    for choice in constraints.get(var):
-
-        if var not in temp:
-            temp[var] = []
-
-        coords = getCoords(board)
-        orient = choice[1]
-        # add pentomino to the board and assignment
-        add_pentomino(board, orient, coords)
-        tuple = (orient, coords)
-        assignment.append(tuple)
-
-        # temporarily save (key,val)
-        temp[var].append(choice)
-        # remove from constraints list
-        if (len(constraints[var]) == 0):
-            del constraints[var]
-        else:
-            constraints[var].remove(choice)
-
-        backtrack(constraints, assignment, temp)
-    # for val in orderValues(var, assignment, pents):
 
     
     
