@@ -51,27 +51,24 @@ def solve(board, pents):
 
                         choices[choice].append((row, col))
             i += 1     # moving forward in pent_orients
-        i = 0
+        i = 0      # new set of orient_idx's 
     # now we should have our choices and constraints dictionaries filled and we can backtrack
+    # print(constraints)
+    # print(choices)
     flag, ret_board = alg_back(board, choices, constraints)
     return ret_board
 
 def place_pent(board, pent, pent_idx, coord, constraints, choices): # does add pentomino while changing choices and constraints
+
     for row in range(pent.shape[0]):
         for col in range(pent.shape[1]):
             if pent[row][col] != 0:
-                if coord[0]+row >= board.shape[0] or coord[1]+col >= board.shape[1]:
-                    print("error1")
-                    remove_pentomino(board, get_pent_idx(pent))
-                    return False
-                if board[coord[0]+row][coord[1]+col] != -1: # Overlap
-                    print("error")
-                    remove_pentomino(board, get_pent_idx(pent))
+                if board[coord[0]+row][coord[1]+col] != 0: # Overlap
                     return False
                 else:
                     board[coord[0]+row][coord[1]+col] = pent[row][col]
                     constraints[(row, col)] = None
-    
+
     for tup in choices.keys():
         if tup[0] == pent_idx:
             choices[tup] = None
@@ -97,24 +94,40 @@ def alg_back(board, choices, constraints):
     choice_flag = True
     const_flag = True
     for key in choices.keys():
-        if choices[key]:
+        if choices[key] is not None:
             choice_flag = False 
             break
     for key in constraints.keys():
-        if constraints[key]:
+        if constraints[key] is not None:
             const_flag = False 
             break
 
     if choice_flag and const_flag:
         return True, board
 
+    """
     temp_min = [(key, len(choices[tup])) for tup in choices.keys()]
     temp_min.sort(key=lambda x: x[1])
     chosen = choices[temp_min[0][0]]  # MOST RECENT ERROR <-- this is failing for a reason; it's printing a list of tuples instead of a tuple with pent idx and orient idx 
+    """
+
+    minimum = float('inf')
+    chosen = None 
+    for tup in choices.keys():
+        if choices[tup] == None:
+            continue
+        if len(choices[tup]) < minimum:
+            minimum = len(choices[tup])
+            chosen = tup
 
     # chosen = min(choices.keys(), key=lambda tup:len(choices[tup])) <-- error for choices[tup] being None
-    print(chosen)
+    # print(chosen)
+    if len(choices[chosen]) == 0:
+        return False, board
+
+    print(choices[chosen])
     for coord in choices[chosen]:
+        # print(coord)
         if not coord:
             continue
         prev_choices = choices
@@ -123,11 +136,7 @@ def alg_back(board, choices, constraints):
         ret, board_ret = alg_back(board, choices, constraints)
         rem_pent(board, pent_orients[chosen[0]][chosen[1]], chosen[0], coord, constraints, choices)
 
-
-
-
-    
-    
+    return ret, board_ret
 
 # find next pentomino
 def getNextVar(list):
@@ -240,23 +249,19 @@ def can_add_pentomino(board, pent, coord):
                         return False
     return True
 
-
 def add_pentomino(board, pent, coord):
     """
     Adds a pentomino pent to the board. The pentomino will be placed such that
-    coord[0] is the lowest row index of the board and coord[1] is the lowest
-    column index.
+    coord[0] is the lowest row index of the pent and coord[1] is the lowest 
+    column index. 
+    
+    check_pent will also check if the pentomino is part of the valid pentominos.
     """
+
     for row in range(pent.shape[0]):
         for col in range(pent.shape[1]):
             if pent[row][col] != 0:
-                if coord[0]+row >= board.shape[0] or coord[1]+col >= board.shape[1]:
-                    print("error1")
-                    remove_pentomino(board, get_pent_idx(pent))
-                    return False
-                if board[coord[0]+row][coord[1]+col] != -1: # Overlap
-                    print("error")
-                    remove_pentomino(board, get_pent_idx(pent))
+                if board[coord[0]+row][coord[1]+col] != 0: # Overlap
                     return False
                 else:
                     board[coord[0]+row][coord[1]+col] = pent[row][col]
