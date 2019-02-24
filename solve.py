@@ -108,8 +108,12 @@ def alg_back(board, choices, constraints):
     if choice_flag and const_flag:
         return True, board
 
-    chosen = min(choices.keys(), key=lambda tup:len(choices[tup]))
+    temp_min = [(key, len(choices[tup])) for tup in choices.keys()]
+    temp_min.sort(key=lambda x: x[1])
+    chosen = choices[temp_min[0][0]]  # MOST RECENT ERROR <-- this is failing for a reason; it's printing a list of tuples instead of a tuple with pent idx and orient idx 
 
+    # chosen = min(choices.keys(), key=lambda tup:len(choices[tup])) <-- error for choices[tup] being None
+    print(chosen)
     for coord in choices[chosen]:
         if not coord:
             continue
