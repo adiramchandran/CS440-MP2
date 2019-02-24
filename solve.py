@@ -125,14 +125,18 @@ def alg_back(board, choices, constraints):
     if len(choices[chosen]) == 0:
         return False, board
 
-    print(choices[chosen])
+    ret = False
+    board_ret = None
+
     for coord in choices[chosen]:
         # print(coord)
         if not coord:
             continue
         prev_choices = choices
         prev_constraints = constraints
-        place_pent(board, pent_orients[chosen[0]][chosen[1]], chosen[0], coord, constraints, choices)
+        place_flag = place_pent(board, pent_orients[chosen[0]][chosen[1]], chosen[0], coord, constraints, choices)
+        if not place_flag:
+            continue
         ret, board_ret = alg_back(board, choices, constraints)
         rem_pent(board, pent_orients[chosen[0]][chosen[1]], chosen[0], coord, constraints, choices)
 
