@@ -932,15 +932,76 @@ class ultimateTicTacToe:
         winner(int): 1 for maxPlayer is the winner, -1 for minPlayer is the winner, and 0 for tie.
         """
         #YOUR CODE HERE
-        bestMove=[]
+        bestValue=[]
         gameBoards=[]
-        winner=0
-        return gameBoards, bestMove, winner
+        bestMoveArr=[]
+        expNodesList = []
+        currIdx = randint(0, 8)
+        firstPlayer = randint(0, 1)      # 0 is own agent, 1 is predefined offensive agent
+        winner = 0
+
+        if firstPlayer:
+            self.currPlayer = True
+        else:
+            self.currPlayer = False
+        while True:
+            if self.evaluatePredefined(not self.currPlayer) == 10000:
+                return gameBoards, bestMoveArr, expNodesList, bestValue, self.checkWinner()
+            if self.evaluatePredefined(not self.currPlayer) == -10000:
+                return gameBoards, bestMoveArr, expNodesList, bestValue, self.checkWinner()
+            if self.checkMovesLeft() == False:
+                return gameBoards, bestMoveArr, expNodesList, bestValue, self.checkWinner()
+            if self.currPlayer:
+                self.printGameBoard()
+                print("Your turn! Enter a valid move on board " + str(currIdx))
+                x_coord = int(input("Enter x coordinate (0-8): "))
+                y_coord = int(input("Enter y coordinate (0-8): "))
+                self.bestMove = (x_coord, y_coord)
+                self.board[self.bestMove[0]][self.bestMove[1]] = self.maxPlayer
+                self.printGameBoard()
+                print("Move made!")
+                bestMoveVal = self.evaluatePredefined(self.currPlayer)
+                top_left = self.getTopLeft(currIdx)
+                currIdx = self.getBoardIdx(top_left, self.bestMove)
+                bestMoveArr.append(self.bestMove)
+                """
+                print("Max player score: ")   
+                print(self.evaluatePredefined(self.currPlayer))   
+                print("Min Player score: ")
+                print(self.evaluatePredefined(not self.currPlayer)) 
+                """
+                self.expandedNodes.append(self.currExpandedNodes)
+                bestValue.append(bestMoveVal)
+                gameBoards.append(self.board)
+                self.currPlayer = not self.currPlayer
+            else:
+                bestMoveVal = self.ownalphabeta(0, currIdx, float('-inf'), float('inf'), self.currPlayer)
+                top_left = self.getTopLeft(currIdx)
+                currIdx = self.getBoardIdx(top_left, self.bestMove)
+                bestMoveArr.append(self.bestMove)
+                """
+                print("Max player score: ")   
+                print(self.evaluatePredefined(not self.currPlayer))   
+                print("Min Player score: ")
+                print(self.evaluatePredefined(self.currPlayer)) 
+                """
+                self.expandedNodes.append(self.currExpandedNodes)  
+                self.currExpandedNodes = 0
+                bestValue.append(bestMoveVal)
+                self.board[self.bestMove[0]][self.bestMove[1]] = self.minPlayer
+                gameBoards.append(self.board)
+                self.currPlayer = not self.currPlayer
+
+        
+        return gameBoards, bestMoveArr, expNodesList, bestValue, winner
 
 if __name__=="__main__":
     uttt=ultimateTicTacToe()
-    # gameBoards, bestMove, expNodesList, bestValue, winner=uttt.playGamePredifinedAgent(True,True,False)
-    gameBoard, bestMove, expNodesList, bestValue, winner = uttt.playGameYourAgent()
+    # gameBoards, bestMove, expNodesList, bestValue, winner=uttt.playGamePredifinedAgent(0,0,1)
+    # gameBoard, bestMove, expNodesList, bestValue, winner = uttt.playGameYourAgent()
+    uttt.playGameHuman()
+    print("THhe best value array is: ")
+    print(bestValue)
     print("The number of expanded nodes: ")
     print(uttt.expandedNodes)
     if winner == 1:
