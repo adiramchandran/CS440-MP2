@@ -277,33 +277,35 @@ class ultimateTicTacToe:
         """
         #YOUR CODE HERE
         score=0
+        max_score = 0
+        min_score = 0
         # cover max player first
         if isMax:
             if self.evaluateLocalBoardDesigned(0, 0, 'X') == 10000 or self.evaluateLocalBoardDesigned(3, 0, 'X') == 10000 or self.evaluateLocalBoardDesigned(6, 0, 'X') == 10000 or self.evaluateLocalBoardDesigned(0, 3, 'X') == 10000 or self.evaluateLocalBoardDesigned(3, 3, 'X') == 10000 or self.evaluateLocalBoardDesigned(6, 3, 'X') == 10000 or self.evaluateLocalBoardDesigned(0, 6, 'X') == 10000 or self.evaluateLocalBoardDesigned(3, 6, 'X') == 10000 or self.evaluateLocalBoardDesigned(6, 6, 'X') == 10000:
                self.twos = False
-               return 10000
+               max_score = 10000
             else:
                 if self.twos:
                     if self.evaluateLocalBoardDesigned(0, 0, 'X') % 100 == 0:
-                        score += self.evaluateLocalBoardDesigned(0, 0, 'X')
+                        max_score += self.evaluateLocalBoardDesigned(0, 0, 'X')
                     if self.evaluateLocalBoardDesigned(3, 0, 'X') % 100 == 0:
-                        score += self.evaluateLocalBoardDesigned(3, 0, 'X')
+                        max_score += self.evaluateLocalBoardDesigned(3, 0, 'X')
                     if self.evaluateLocalBoardDesigned(6, 0, 'X') % 100 == 0:
-                        score += self.evaluateLocalBoardDesigned(6, 0, 'X')
+                        max_score += self.evaluateLocalBoardDesigned(6, 0, 'X')
                     if self.evaluateLocalBoardDesigned(0, 3, 'X') % 100 == 0:
-                        score += self.evaluateLocalBoardDesigned(0, 3, 'X')
+                        max_score += self.evaluateLocalBoardDesigned(0, 3, 'X')
                     if self.evaluateLocalBoardDesigned(3, 3, 'X') % 100 == 0:
-                        score += self.evaluateLocalBoardDesigned(3, 3, 'X')
+                        max_score += self.evaluateLocalBoardDesigned(3, 3, 'X')
                     if self.evaluateLocalBoardDesigned(6, 3, 'X') % 100 == 0:
-                        score += self.evaluateLocalBoardDesigned(6, 3, 'X')
+                        max_score += self.evaluateLocalBoardDesigned(6, 3, 'X')
                     if self.evaluateLocalBoardDesigned(0, 6, 'X') % 100 == 0:
-                        score += self.evaluateLocalBoardDesigned(0, 6, 'X')
+                        max_score += self.evaluateLocalBoardDesigned(0, 6, 'X')
                     if self.evaluateLocalBoardDesigned(3, 6, 'X') % 100 == 0:
-                        score += self.evaluateLocalBoardDesigned(3, 6, 'X')
+                        max_score += self.evaluateLocalBoardDesigned(3, 6, 'X')
                     if self.evaluateLocalBoardDesigned(6, 6, 'X') % 100 == 0:
-                        score += self.evaluateLocalBoardDesigned(6, 6, 'X')
+                        max_score += self.evaluateLocalBoardDesigned(6, 6, 'X')
                 else:
-                    score += self.evaluateLocalBoardDesigned(0, 0, 'X') + self.evaluateLocalBoardDesigned(3, 0, 'X') + self.evaluateLocalBoardDesigned(6, 0, 'X') + self.evaluateLocalBoardDesigned(0, 3, 'X') + self.evaluateLocalBoardDesigned(3, 3, 'X') + self.evaluateLocalBoardDesigned(6, 3, 'X') + self.evaluateLocalBoardDesigned(0, 6, 'X') + self.evaluateLocalBoardDesigned(3, 6, 'X') + self.evaluateLocalBoardDesigned(6, 6, 'X')
+                    max_score += self.evaluateLocalBoardDesigned(0, 0, 'X') + self.evaluateLocalBoardDesigned(3, 0, 'X') + self.evaluateLocalBoardDesigned(6, 0, 'X') + self.evaluateLocalBoardDesigned(0, 3, 'X') + self.evaluateLocalBoardDesigned(3, 3, 'X') + self.evaluateLocalBoardDesigned(6, 3, 'X') + self.evaluateLocalBoardDesigned(0, 6, 'X') + self.evaluateLocalBoardDesigned(3, 6, 'X') + self.evaluateLocalBoardDesigned(6, 6, 'X')
         # min player
         else:
             if self.evaluateLocalBoardDesigned(0, 0, 'O') == 10000 or self.evaluateLocalBoardDesigned(3, 0, 'O') ==10000 or self.evaluateLocalBoardDesigned(6, 0, 'O') == 10000 or self.evaluateLocalBoardDesigned(0, 3, 'O') == 10000 or self.evaluateLocalBoardDesigned(3, 3, 'O') == 10000 or self.evaluateLocalBoardDesigned(6, 3, 'O') == 10000 or self.evaluateLocalBoardDesigned(0, 6, 'O') == 10000 or self.evaluateLocalBoardDesigned(3, 6, 'O') == 10000 or self.evaluateLocalBoardDesigned(6, 6, 'O') == 10000:
@@ -312,27 +314,28 @@ class ultimateTicTacToe:
             else:
                 if self.twos:
                     if self.evaluateLocalBoardDesigned(0, 0, 'O') % 100 == 0:
-                        score += self.evaluateLocalBoardDesigned(0, 0, 'O')
+                        min_score += self.evaluateLocalBoardDesigned(0, 0, 'O')
                     if self.evaluateLocalBoardDesigned(3, 0, 'O') % 100 == 0:
-                        score += self.evaluateLocalBoardDesigned(3, 0, 'O')
+                        min_score += self.evaluateLocalBoardDesigned(3, 0, 'O')
                     if self.evaluateLocalBoardDesigned(6, 0, 'O') % 100 == 0:
-                        score += self.evaluateLocalBoardDesigned(6, 0, 'O')
+                        min_score += self.evaluateLocalBoardDesigned(6, 0, 'O')
                     if self.evaluateLocalBoardDesigned(0, 3, 'O') % 100 == 0:
-                        score += self.evaluateLocalBoardDesigned(0, 3, 'O')
+                        min_score += self.evaluateLocalBoardDesigned(0, 3, 'O')
                     if self.evaluateLocalBoardDesigned(3, 3, 'O') % 100 == 0:
-                        score += self.evaluateLocalBoardDesigned(3, 3, 'O')
+                        min_score += self.evaluateLocalBoardDesigned(3, 3, 'O')
                     if self.evaluateLocalBoardDesigned(6, 3, 'O') % 100 == 0:
-                        score += self.evaluateLocalBoardDesigned(6, 3, 'O')
+                        min_score += self.evaluateLocalBoardDesigned(6, 3, 'O')
                     if self.evaluateLocalBoardDesigned(0, 6, 'O') % 100 == 0:
-                        score += self.evaluateLocalBoardDesigned(0, 6, 'O')
+                        min_score += self.evaluateLocalBoardDesigned(0, 6, 'O')
                     if self.evaluateLocalBoardDesigned(3, 6, 'O') % 100 == 0:
-                        score += self.evaluateLocalBoardDesigned(3, 6, 'X')
+                        min_score += self.evaluateLocalBoardDesigned(3, 6, 'X')
                     if self.evaluateLocalBoardDesigned(6, 6, 'O') % 100 == 0:
-                        score += self.evaluateLocalBoardDesigned(6, 6, 'O')
+                        min_score += self.evaluateLocalBoardDesigned(6, 6, 'O')
                 else:
-                    score += self.evaluateLocalBoardDesigned(0, 0, 'O') + self.evaluateLocalBoardDesigned(3, 0, 'O') + self.evaluateLocalBoardDesigned(6, 0, 'O') + self.evaluateLocalBoardDesigned(0, 3, 'O') + self.evaluateLocalBoardDesigned(3, 3, 'O') + self.evaluateLocalBoardDesigned(6, 3, 'O') + self.evaluateLocalBoardDesigned(0, 6, 'O') + self.evaluateLocalBoardDesigned(3, 6, 'O') + self.evaluateLocalBoardDesigned(6, 6, 'O')
-                score *= -1
+                    min_score += self.evaluateLocalBoardDesigned(0, 0, 'O') + self.evaluateLocalBoardDesigned(3, 0, 'O') + self.evaluateLocalBoardDesigned(6, 0, 'O') + self.evaluateLocalBoardDesigned(0, 3, 'O') + self.evaluateLocalBoardDesigned(3, 3, 'O') + self.evaluateLocalBoardDesigned(6, 3, 'O') + self.evaluateLocalBoardDesigned(0, 6, 'O') + self.evaluateLocalBoardDesigned(3, 6, 'O') + self.evaluateLocalBoardDesigned(6, 6, 'O')
+                min_score *= -1
         self.twos = False
+        score = max_score + min_score
         return score
 
 
