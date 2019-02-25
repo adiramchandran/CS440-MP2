@@ -641,7 +641,7 @@ class ultimateTicTacToe:
         ret = (500 * fives) + (100 * ones)
         if ret != 0:
             self.twos = True
-            return ret
+        
 
         corners = 0
         if self.board[row_start][col_start] == player:
@@ -654,7 +654,8 @@ class ultimateTicTacToe:
             corners += 1
         
         # print("corners: ", corners*30)
-        return (corners * 30)
+        ret += (corners * 30)
+        return ret
 
     def checkMovesLeft(self):
         """
@@ -1079,8 +1080,8 @@ class ultimateTicTacToe:
 
 if __name__=="__main__":
     uttt=ultimateTicTacToe()
-    gameBoards, bestMove, expNodesList, bestValue, winner=uttt.playGamePredifinedAgent(False,False,False)
-    # gameBoard, bestMove, expNodesList, bestValue, winner = uttt.playGameYourAgent()
+    # gameBoards, bestMove, expNodesList, bestValue, winner=uttt.playGamePredifinedAgent(False,False,False)
+    gameBoard, bestMove, expNodesList, bestValue, winner = uttt.playGameYourAgent()
     print("The number of expanded nodes: ")
     print(uttt.expandedNodes)
     if winner == 1:
