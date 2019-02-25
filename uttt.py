@@ -71,63 +71,63 @@ class ultimateTicTacToe:
         score=0
         # cover max player first
         if isMax:
-            if self.evaluateLocalBoardPredefined(0, 0, 'X') == 10000 or self.evaluateLocalBoardPredefined(3, 0, 'X') == 10000 or self.evaluateLocalBoardPredefined(6, 0, 'X') == 10000 or self.evaluateLocalBoardPredefined(0, 3, 'X') == 10000 or self.evaluateLocalBoardPredefined(3, 3, 'X') == 10000 or self.evaluateLocalBoardPredefined(6, 3, 'X') == 10000 or self.evaluateLocalBoardPredefined(0, 6, 'X') == 10000 or self.evaluateLocalBoardPredefined(3, 6, 'X') == 10000 or self.evaluateLocalBoardPredefined(6, 6, 'X') == 10000:
+            if self.evaluateLocalBoardPredefinedMax(0, 0, 'X') == 10000 or self.evaluateLocalBoardPredefinedMax(3, 0, 'X') == 10000 or self.evaluateLocalBoardPredefinedMax(6, 0, 'X') == 10000 or self.evaluateLocalBoardPredefinedMax(0, 3, 'X') == 10000 or self.evaluateLocalBoardPredefinedMax(3, 3, 'X') == 10000 or self.evaluateLocalBoardPredefinedMax(6, 3, 'X') == 10000 or self.evaluateLocalBoardPredefinedMax(0, 6, 'X') == 10000 or self.evaluateLocalBoardPredefinedMax(3, 6, 'X') == 10000 or self.evaluateLocalBoardPredefinedMax(6, 6, 'X') == 10000:
                self.twos = False
                return 10000
             else:
                 if self.twos:
-                    if self.evaluateLocalBoardPredefined(0, 0, 'X') % 100 == 0:
-                        score += self.evaluateLocalBoardPredefined(0, 0, 'X')
-                    if self.evaluateLocalBoardPredefined(3, 0, 'X') % 100 == 0:
-                        score += self.evaluateLocalBoardPredefined(3, 0, 'X')
-                    if self.evaluateLocalBoardPredefined(6, 0, 'X') % 100 == 0:
-                        score += self.evaluateLocalBoardPredefined(6, 0, 'X')
-                    if self.evaluateLocalBoardPredefined(0, 3, 'X') % 100 == 0:
-                        score += self.evaluateLocalBoardPredefined(0, 3, 'X')
-                    if self.evaluateLocalBoardPredefined(3, 3, 'X') % 100 == 0:
-                        score += self.evaluateLocalBoardPredefined(3, 3, 'X')
-                    if self.evaluateLocalBoardPredefined(6, 3, 'X') % 100 == 0:
-                        score += self.evaluateLocalBoardPredefined(6, 3, 'X')
-                    if self.evaluateLocalBoardPredefined(0, 6, 'X') % 100 == 0:
-                        score += self.evaluateLocalBoardPredefined(0, 6, 'X')
-                    if self.evaluateLocalBoardPredefined(3, 6, 'X') % 100 == 0:
-                        score += self.evaluateLocalBoardPredefined(3, 6, 'X')
-                    if self.evaluateLocalBoardPredefined(6, 6, 'X') % 100 == 0:
-                        score += self.evaluateLocalBoardPredefined(6, 6, 'X')
+                    if self.evaluateLocalBoardPredefinedMax(0, 0, 'X') % 100 == 0:
+                        score += self.evaluateLocalBoardPredefinedMax(0, 0, 'X')
+                    if self.evaluateLocalBoardPredefinedMax(3, 0, 'X') % 100 == 0:
+                        score += self.evaluateLocalBoardPredefinedMax(3, 0, 'X')
+                    if self.evaluateLocalBoardPredefinedMax(6, 0, 'X') % 100 == 0:
+                        score += self.evaluateLocalBoardPredefinedMax(6, 0, 'X')
+                    if self.evaluateLocalBoardPredefinedMax(0, 3, 'X') % 100 == 0:
+                        score += self.evaluateLocalBoardPredefinedMax(0, 3, 'X')
+                    if self.evaluateLocalBoardPredefinedMax(3, 3, 'X') % 100 == 0:
+                        score += self.evaluateLocalBoardPredefinedMax(3, 3, 'X')
+                    if self.evaluateLocalBoardPredefinedMax(6, 3, 'X') % 100 == 0:
+                        score += self.evaluateLocalBoardPredefinedMax(6, 3, 'X')
+                    if self.evaluateLocalBoardPredefinedMax(0, 6, 'X') % 100 == 0:
+                        score += self.evaluateLocalBoardPredefinedMax(0, 6, 'X')
+                    if self.evaluateLocalBoardPredefinedMax(3, 6, 'X') % 100 == 0:
+                        score += self.evaluateLocalBoardPredefinedMax(3, 6, 'X')
+                    if self.evaluateLocalBoardPredefinedMax(6, 6, 'X') % 100 == 0:
+                        score += self.evaluateLocalBoardPredefinedMax(6, 6, 'X')
                 else:
-                    score += self.evaluateLocalBoardPredefined(0, 0, 'X') + self.evaluateLocalBoardPredefined(3, 0, 'X') + self.evaluateLocalBoardPredefined(6, 0, 'X') + self.evaluateLocalBoardPredefined(0, 3, 'X') + self.evaluateLocalBoardPredefined(3, 3, 'X') + self.evaluateLocalBoardPredefined(6, 3, 'X') + self.evaluateLocalBoardPredefined(0, 6, 'X') + self.evaluateLocalBoardPredefined(3, 6, 'X') + self.evaluateLocalBoardPredefined(6, 6, 'X')
+                    score += self.evaluateLocalBoardPredefinedMax(0, 0, 'X') + self.evaluateLocalBoardPredefinedMax(3, 0, 'X') + self.evaluateLocalBoardPredefinedMax(6, 0, 'X') + self.evaluateLocalBoardPredefinedMax(0, 3, 'X') + self.evaluateLocalBoardPredefinedMax(3, 3, 'X') + self.evaluateLocalBoardPredefinedMax(6, 3, 'X') + self.evaluateLocalBoardPredefinedMax(0, 6, 'X') + self.evaluateLocalBoardPredefinedMax(3, 6, 'X') + self.evaluateLocalBoardPredefinedMax(6, 6, 'X')
         # min player
         else:
-            if self.evaluateLocalBoardPredefined(0, 0, 'O') == 10000 or self.evaluateLocalBoardPredefined(3, 0, 'O') ==10000 or self.evaluateLocalBoardPredefined(6, 0, 'O') == 10000 or self.evaluateLocalBoardPredefined(0, 3, 'O') == 10000 or self.evaluateLocalBoardPredefined(3, 3, 'O') == 10000 or self.evaluateLocalBoardPredefined(6, 3, 'O') == 10000 or self.evaluateLocalBoardPredefined(0, 6, 'O') == 10000 or self.evaluateLocalBoardPredefined(3, 6, 'O') == 10000 or self.evaluateLocalBoardPredefined(6, 6, 'O') == 10000:
+            if self.evaluateLocalBoardPredefinedMin(0, 0, 'O', 'X') == 10000 or self.evaluateLocalBoardPredefinedMin(3, 0, 'O', 'X') ==10000 or self.evaluateLocalBoardPredefinedMin(6, 0, 'O', 'X') == 10000 or self.evaluateLocalBoardPredefinedMin(0, 3, 'O', 'X') == 10000 or self.evaluateLocalBoardPredefinedMin(3, 3, 'O', 'X') == 10000 or self.evaluateLocalBoardPredefinedMin(6, 3, 'O', 'X') == 10000 or self.evaluateLocalBoardPredefinedMin(0, 6, 'O', 'X') == 10000 or self.evaluateLocalBoardPredefinedMin(3, 6, 'O', 'X') == 10000 or self.evaluateLocalBoardPredefinedMin(6, 6, 'O', 'X') == 10000:
                self.twos = False
                return -10000
             else:
                 if self.twos:
-                    if self.evaluateLocalBoardPredefined(0, 0, 'O') % 100 == 0:
-                        score += self.evaluateLocalBoardPredefined(0, 0, 'O')
-                    if self.evaluateLocalBoardPredefined(3, 0, 'O') % 100 == 0:
-                        score += self.evaluateLocalBoardPredefined(3, 0, 'O')
-                    if self.evaluateLocalBoardPredefined(6, 0, 'O') % 100 == 0:
-                        score += self.evaluateLocalBoardPredefined(6, 0, 'O')
-                    if self.evaluateLocalBoardPredefined(0, 3, 'O') % 100 == 0:
-                        score += self.evaluateLocalBoardPredefined(0, 3, 'O')
-                    if self.evaluateLocalBoardPredefined(3, 3, 'O') % 100 == 0:
-                        score += self.evaluateLocalBoardPredefined(3, 3, 'O')
-                    if self.evaluateLocalBoardPredefined(6, 3, 'O') % 100 == 0:
-                        score += self.evaluateLocalBoardPredefined(6, 3, 'O')
-                    if self.evaluateLocalBoardPredefined(0, 6, 'O') % 100 == 0:
-                        score += self.evaluateLocalBoardPredefined(0, 6, 'O')
-                    if self.evaluateLocalBoardPredefined(3, 6, 'O') % 100 == 0:
-                        score += self.evaluateLocalBoardPredefined(3, 6, 'X')
-                    if self.evaluateLocalBoardPredefined(6, 6, 'O') % 100 == 0:
-                        score += self.evaluateLocalBoardPredefined(6, 6, 'O')
+                    if self.evaluateLocalBoardPredefinedMin(0, 0, 'O', 'X') % 100 == 0:
+                        score += self.evaluateLocalBoardPredefinedMin(0, 0, 'O', 'X')
+                    if self.evaluateLocalBoardPredefinedMin(3, 0, 'O', 'X') % 100 == 0:
+                        score += self.evaluateLocalBoardPredefinedMin(3, 0, 'O', 'X')
+                    if self.evaluateLocalBoardPredefinedMin(6, 0, 'O', 'X') % 100 == 0:
+                        score += self.evaluateLocalBoardPredefinedMin(6, 0, 'O', 'X')
+                    if self.evaluateLocalBoardPredefinedMin(0, 3, 'O', 'X') % 100 == 0:
+                        score += self.evaluateLocalBoardPredefinedMin(0, 3, 'O', 'X')
+                    if self.evaluateLocalBoardPredefinedMin(3, 3, 'O', 'X') % 100 == 0:
+                        score += self.evaluateLocalBoardPredefinedMin(3, 3, 'O', 'X')
+                    if self.evaluateLocalBoardPredefinedMin(6, 3, 'O', 'X') % 100 == 0:
+                        score += self.evaluateLocalBoardPredefinedMin(6, 3, 'O', 'X')
+                    if self.evaluateLocalBoardPredefinedMin(0, 6, 'O', 'X') % 100 == 0:
+                        score += self.evaluateLocalBoardPredefinedMin(0, 6, 'O', 'X')
+                    if self.evaluateLocalBoardPredefinedMin(3, 6, 'O', 'X') % 100 == 0:
+                        score += self.evaluateLocalBoardPredefinedMin(3, 6, 'O', 'X')
+                    if self.evaluateLocalBoardPredefinedMin(6, 6, 'O', 'X') % 100 == 0:
+                        score += self.evaluateLocalBoardPredefinedMin(6, 6, 'O', 'X')
                 else:
-                    score += self.evaluateLocalBoardPredefined(0, 0, 'O') + self.evaluateLocalBoardPredefined(3, 0, 'O') + self.evaluateLocalBoardPredefined(6, 0, 'O') + self.evaluateLocalBoardPredefined(0, 3, 'O') + self.evaluateLocalBoardPredefined(3, 3, 'O') + self.evaluateLocalBoardPredefined(6, 3, 'O') + self.evaluateLocalBoardPredefined(0, 6, 'O') + self.evaluateLocalBoardPredefined(3, 6, 'O') + self.evaluateLocalBoardPredefined(6, 6, 'O')
+                    score += self.evaluateLocalBoardPredefinedMin(0, 0, 'O', 'X') + self.evaluateLocalBoardPredefinedMin(3, 0, 'O', 'X') + self.evaluateLocalBoardPredefinedMin(6, 0, 'O', 'X') + self.evaluateLocalBoardPredefinedMin(0, 3, 'O', 'X') + self.evaluateLocalBoardPredefinedMin(3, 3, 'O', 'X') + self.evaluateLocalBoardPredefinedMin(6, 3, 'O', 'X') + self.evaluateLocalBoardPredefinedMin(0, 6, 'O', 'X') + self.evaluateLocalBoardPredefinedMin(3, 6, 'O', 'X') + self.evaluateLocalBoardPredefinedMin(6, 6, 'O', 'X')
                 score *= -1
         self.twos = False
         return score
 
-    def evaluateLocalBoardPredefined(self, row_start, col_start, player):
+    def evaluateLocalBoardPredefinedMax(self, row_start, col_start, player):
         # check row winner
         if (self.board[row_start][col_start] == self.board[row_start][col_start+1] == self.board[row_start][col_start+2] == player) or (self.board[row_start+1][col_start] == self.board[row_start+1][col_start+1] == self.board[row_start+1][col_start+2] == player) or (self.board[row_start+2][col_start] == self.board[row_start+2][col_start+1] == self.board[row_start+2][col_start+2] == player):
            return 10000
@@ -265,6 +265,146 @@ class ultimateTicTacToe:
         
         # print("corners: ", corners*30)
         return (corners * 30)
+
+    def evaluateLocalBoardPredefinedMin(self, row_start, col_start, player, notplayer):
+        # check row winner
+        if (self.board[row_start][col_start] == self.board[row_start][col_start+1] == self.board[row_start][col_start+2] == player) or (self.board[row_start+1][col_start] == self.board[row_start+1][col_start+1] == self.board[row_start+1][col_start+2] == player) or (self.board[row_start+2][col_start] == self.board[row_start+2][col_start+1] == self.board[row_start+2][col_start+2] == player):
+           return 10000
+        # check column winner
+        if (self.board[row_start][col_start] == self.board[row_start+1][col_start] == self.board[row_start+2][col_start] == player) or (self.board[row_start][col_start+1] == self.board[row_start+1][col_start+1] == self.board[row_start+2][col_start+1] == player) or (self.board[row_start][col_start+2] == self.board[row_start+1][col_start+2] == self.board[row_start+2][col_start+2] == player):
+            return 10000
+        # check diagonal winner
+        if (self.board[row_start][col_start] == self.board[row_start+1][col_start+1] == self.board[row_start+2][col_start+2] == player) or (self.board[row_start][col_start+2] == self.board[row_start+1][col_start+1] == self.board[row_start+2][col_start] == player):
+            return 10000
+
+        # now we know there is no winner, so go to rule 2
+        fives = 0
+        ones = 0
+        # check 2/3 rows
+        if (self.board[row_start][col_start] == self.board[row_start][col_start+1] == notplayer) and self.board[row_start][col_start+2] == player:
+            fives += 1
+        elif (self.board[row_start][col_start] == self.board[row_start][col_start+1] == player) and self.board[row_start][col_start+2] == '_':
+            ones += 1
+        if (self.board[row_start+1][col_start] == self.board[row_start+1][col_start+1] == notplayer) and self.board[row_start+1][col_start+2] == player:
+            fives += 1
+        elif (self.board[row_start+1][col_start] == self.board[row_start+1][col_start+1] == player) and self.board[row_start+1][col_start+2] == '_':
+            ones += 1
+        if (self.board[row_start+2][col_start] == self.board[row_start+2][col_start+1] == notplayer) and self.board[row_start+2][col_start+2] == player:
+            fives += 1
+        elif (self.board[row_start+2][col_start] == self.board[row_start+2][col_start+1] == player) and self.board[row_start+2][col_start+2] == '_':
+            ones += 1
+
+        if (self.board[row_start][col_start+1] == self.board[row_start][col_start+2] == notplayer) and self.board[row_start][col_start] == player:
+            fives += 1
+        elif (self.board[row_start][col_start+1] == self.board[row_start][col_start+2] == player) and self.board[row_start][col_start] == '_':
+            ones += 1
+        if (self.board[row_start+1][col_start+1] == self.board[row_start+1][col_start+2] == notplayer) and self.board[row_start+1][col_start] == player:
+            fives += 1
+        elif (self.board[row_start+1][col_start+1] == self.board[row_start+1][col_start+2] == player) and self.board[row_start+1][col_start] == '_':
+            ones += 1
+        if (self.board[row_start+2][col_start+1] == self.board[row_start+2][col_start+2] == notplayer) and self.board[row_start+2][col_start] == player:
+            fives += 1
+        elif (self.board[row_start+2][col_start+1] == self.board[row_start+2][col_start+2] == player) and self.board[row_start+2][col_start] == '_':
+            ones += 1
+
+        if (self.board[row_start][col_start] == self.board[row_start][col_start+2] == notplayer) and self.board[row_start][col_start+1] == player:
+            fives += 1
+        elif (self.board[row_start][col_start] == self.board[row_start][col_start+2] == player) and self.board[row_start][col_start+1] == '_':
+            ones += 1
+        if (self.board[row_start+1][col_start] == self.board[row_start+1][col_start+2] == notplayer) and self.board[row_start+1][col_start+1] == player:
+            fives += 1
+        elif (self.board[row_start+1][col_start] == self.board[row_start+1][col_start+2] == player) and self.board[row_start+1][col_start+1] == '_':
+            ones += 1
+        if (self.board[row_start+2][col_start] == self.board[row_start+2][col_start+2] == notplayer) and self.board[row_start+2][col_start+1] == player:
+            fives += 1
+        elif (self.board[row_start+2][col_start] == self.board[row_start+2][col_start+2] == player) and self.board[row_start+2][col_start+1] == '_':
+            ones += 1
+
+        # check 2/3 columns
+        if (self.board[row_start][col_start] == self.board[row_start+1][col_start] == notplayer) and self.board[row_start+2][col_start] == player:
+            fives += 1
+        elif (self.board[row_start][col_start] == self.board[row_start+1][col_start] == player) and self.board[row_start+2][col_start] == '_':
+            ones += 1
+        if (self.board[row_start][col_start+1] == self.board[row_start+1][col_start+1] == notplayer) and self.board[row_start+2][col_start+1] == player:
+            fives += 1
+        elif (self.board[row_start][col_start+1] == self.board[row_start+1][col_start+1] == player) and self.board[row_start+2][col_start+1] == '_':
+            ones += 1
+        if (self.board[row_start][col_start+2] == self.board[row_start+1][col_start+2] == notplayer) and self.board[row_start+2][col_start+2] == player:
+            fives += 1
+        elif (self.board[row_start][col_start+2] == self.board[row_start+1][col_start+2] == player) and self.board[row_start+2][col_start+2] == '_':
+            ones += 1
+
+        if (self.board[row_start+1][col_start] == self.board[row_start+2][col_start] == notplayer) and self.board[row_start][col_start] == player:
+            fives += 1
+        elif (self.board[row_start+1][col_start] == self.board[row_start+2][col_start] == player) and self.board[row_start][col_start] == '_':
+            ones += 1
+        if (self.board[row_start+1][col_start+1] == self.board[row_start+2][col_start+1] == notplayer) and self.board[row_start][col_start+1] == player:
+            fives += 1
+        elif (self.board[row_start+1][col_start+1] == self.board[row_start+2][col_start+1] == player) and self.board[row_start][col_start+1] == '_':
+            ones += 1
+        if (self.board[row_start+1][col_start+2] == self.board[row_start+2][col_start+2] == notplayer) and self.board[row_start][col_start+2] == player:
+            fives += 1
+        elif (self.board[row_start+1][col_start+2] == self.board[row_start+2][col_start+2] == player) and self.board[row_start][col_start+2] == '_':
+            ones += 1
+
+        if (self.board[row_start][col_start] == self.board[row_start+2][col_start] == notplayer) and self.board[row_start+1][col_start] == player:
+            fives += 1
+        elif (self.board[row_start][col_start] == self.board[row_start+2][col_start] == player) and self.board[row_start+1][col_start] == '_':
+            ones += 1
+        if (self.board[row_start][col_start+1] == self.board[row_start+2][col_start+1] == notplayer) and self.board[row_start+1][col_start+1] == player:
+            fives += 1
+        elif (self.board[row_start][col_start+1] == self.board[row_start+2][col_start+1] == player) and self.board[row_start+1][col_start+1] == '_':
+            ones += 1
+        if (self.board[row_start][col_start+2] == self.board[row_start+2][col_start+2] == notplayer) and self.board[row_start+1][col_start+2] == player:
+            fives += 1
+        elif (self.board[row_start][col_start+2] == self.board[row_start+2][col_start+2] == player) and self.board[row_start+1][col_start+2] == '_':
+            ones += 1
+
+        # check 2/3 diagonals
+        if (self.board[row_start][col_start] == self.board[row_start+1][col_start+1] == notplayer) and self.board[row_start+2][col_start+2] == player:
+            fives += 1
+        elif (self.board[row_start][col_start] == self.board[row_start+1][col_start+1] == player) and self.board[row_start+2][col_start+2] == '_':
+            ones += 1
+        if (self.board[row_start+1][col_start+1] == self.board[row_start+2][col_start+2] == notplayer) and self.board[row_start][col_start] == player:
+            fives += 1
+        elif (self.board[row_start+1][col_start+1] == self.board[row_start+2][col_start+2] == player) and self.board[row_start][col_start] == '_':
+            ones += 1
+        if (self.board[row_start][col_start] == self.board[row_start+2][col_start+2] == notplayer) and self.board[row_start+1][col_start+1] == player:
+            fives += 1
+        elif (self.board[row_start][col_start] == self.board[row_start+2][col_start+2] == player) and self.board[row_start+1][col_start+1] == '_':
+            ones += 1
+
+        if (self.board[row_start+2][col_start] == self.board[row_start+1][col_start+1] == notplayer) and self.board[row_start][col_start+2] == player:
+            fives += 1
+        elif (self.board[row_start+2][col_start] == self.board[row_start+1][col_start+1] == player) and self.board[row_start][col_start+2] == '_':
+            ones += 1
+        if (self.board[row_start+1][col_start+1] == self.board[row_start][col_start+2] == notplayer) and self.board[row_start+2][col_start] == player:
+            fives += 1
+        elif (self.board[row_start+1][col_start+1] == self.board[row_start][col_start+2] == player) and self.board[row_start+2][col_start] == '_':
+            ones += 1
+        if (self.board[row_start+2][col_start] == self.board[row_start][col_start+2] == notplayer) and self.board[row_start+1][col_start+1] == player:
+            fives += 1
+        elif (self.board[row_start+2][col_start] == self.board[row_start][col_start+2] == player) and self.board[row_start+1][col_start+1] == '_':
+            ones += 1
+
+        ret = (500 * fives) + (100 * ones)
+        if ret != 0:
+            self.twos = True
+            return ret
+
+        corners = 0
+        if self.board[row_start][col_start] == player:
+            corners += 1
+        if self.board[row_start+2][col_start] == player:
+            corners += 1
+        if self.board[row_start][col_start+2] == player:
+            corners += 1
+        if self.board[row_start+2][col_start+2] == player:
+            corners += 1
+        
+        # print("corners: ", corners*30)
+        return (corners * 30)
+
 
     def evaluateDesigned(self, isMax):
         """
@@ -732,9 +872,9 @@ class ultimateTicTacToe:
                         self.board[i + startIndex[0]][j + startIndex[1]] = self.maxPlayer
                         currValue = float('-inf')
                         if (alg_flag):
-                            currValue = self.alphabeta(0, currBoardIdx, float('-inf'), float('inf'), not player)
+                            currValue = self.alphabeta(0, currBoardIdx, float('-inf'), float('inf'), notplayer)
                         else:
-                            currValue = self.minimax(0, (3*j) + i, not player)
+                            currValue = self.minimax(0, (3*j) + i, notplayer)
                         self.board[i + startIndex[0]][j + startIndex[1]] = '_'
                         if currValue > bestValue:
                             self.bestMove = (i + startIndex[0], j + startIndex[1])
@@ -747,9 +887,9 @@ class ultimateTicTacToe:
                         self.board[i + startIndex[0]][j + startIndex[1]] = self.minPlayer
                         currValue = float('inf')
                         if (alg_flag):
-                            currValue = self.alphabeta(0, currBoardIdx, float('-inf'), float('inf'), not player)
+                            currValue = self.alphabeta(0, currBoardIdx, float('-inf'), float('inf'), notplayer)
                         else:
-                            currValue = self.minimax(0, (3*j) + i, not player)
+                            currValue = self.minimax(0, (3*j) + i, notplayer)
                         self.board[i + startIndex[0]][j + startIndex[1]] = '_'
                         if currValue < bestValue:
                             self.bestMove = (i + startIndex[0], j + startIndex[1])
@@ -939,8 +1079,8 @@ class ultimateTicTacToe:
 
 if __name__=="__main__":
     uttt=ultimateTicTacToe()
-    # gameBoards, bestMove, expNodesList, bestValue, winner=uttt.playGamePredifinedAgent(True,True,False)
-    gameBoard, bestMove, expNodesList, bestValue, winner = uttt.playGameYourAgent()
+    gameBoards, bestMove, expNodesList, bestValue, winner=uttt.playGamePredifinedAgent(False,False,False)
+    # gameBoard, bestMove, expNodesList, bestValue, winner = uttt.playGameYourAgent()
     print("The number of expanded nodes: ")
     print(uttt.expandedNodes)
     if winner == 1:
