@@ -415,7 +415,212 @@ class ultimateTicTacToe:
         output:
         score(float): estimated utility score for maxPlayer or minPlayer
         """
+        score = 0
+        # RULE 1: check for game complete
+        for i in range(9):
+            for j in range(3):
+                if self.board[3*j][i] == self.board[3*j + 1][i] and self.board[3*j][i] == self.board[3*j + 2][i]:
+                    if self.board[3*j][i] == self.maxPlayer:
+                        score = 10000
+                        return score
+                    elif self.board[3*j][i] == self.minPlayer:
+                        score = -10000
+                        return score
+
+                if self.board[i][3*j] == self.board[i][3*j + 1] and self.board[i][3*j] == self.board[i][3*j + 2]:
+                    if self.board[i][3*j] == self.maxPlayer :
+                        score = 10000
+                        return score
+                    elif self.board[i][3*j] == self.minPlayer:
+                        score = -10000
+                        return score
+
+        # check diagonals
+        for i in range(3):
+            for j in range(3):
+                if self.board[3*j][3*i] == self.board[3*j + 1][3*i + 1] and self.board[3*j][3*i] == self.board[3*j + 2][3*i + 2]:
+                    if self.board[3*j][3*i] == self.maxPlayer:
+                        score = 10000
+                        return score
+                    elif self.board[3*j][3*i] == self.minPlayer:
+                        score = -10000
+                        return score
+                if self.board[3*j][3*i + 2] == self.board[3*j + 1][3*i + 1] and self.board[3*j][3*i + 2] == self.board[3*j + 2][3*i]:
+                    if self.board[3*j][3*i + 2] == self.maxPlayer:
+                        score = 10000
+                        return score
+                    elif self.board[3*j][3*i + 2] == self.minPlayer:
+                        score = -10000
+                        return score
+
+        # RULE 2: check for two-in-a-row
+        for i in range(9):
+            for j in range(3):
+                if self.board[3*j][i] == self.board[3*j + 1][i] and self.board[3*j][i] != '_':
+                    if self.board[3*j + 2][i] == '_':
+                        if self.board[3*j][i] == self.maxPlayer and isMax:
+                            score += 500
+                        elif self.board[3*j][i] == self.minPlayer and not isMax:
+                            score += -100
+                    elif self.board[3*j + 2][i] == self.maxPlayer and isMax:
+                        score += 100
+                    elif self.board[3*j + 2][i] == self.minPlayer and not isMax:
+                        score += -500
+                elif self.board[3*j][i] == self.board[3*j + 2][i] and self.board[3*j][i] != '_':
+                    if self.board[3*j + 1][i] == '_':
+                        if self.board[3*j][i] == self.maxPlayer and isMax:
+                            score += 500
+                        elif self.board[3*j][i] == self.minPlayer and not isMax:
+                            score += -100
+                    elif self.board[3*j + 1][i] == self.maxPlayer and isMax:
+                        score += 100
+                    elif self.board[3*j + 1][i] == self.minPlayer and not isMax:
+                        score += -500
+                elif self.board[3*j + 1][i] == self.board[3*j + 2][i] and self.board[3*j + 1][i] != '_':
+                    if self.board[3*j][i] == '_':
+                        if self.board[3*j + 1][i] == self.maxPlayer and isMax:
+                            score += 500
+                        elif self.board[3*j + 1][i] == self.minPlayer and not isMax:
+                            score += -100
+                    elif self.board[3*j][i] == self.maxPlayer and isMax:
+                        score += 100
+                    elif self.board[3*j][i] == self.minPlayer and not isMax:
+                        score += -500
+
+                if self.board[i][3*j] == self.board[i][3*j + 1] and self.board[i][3*j] != '_':
+                    if self.board[i][3*j + 2] == '_':
+                        if self.board[i][3*j] == self.maxPlayer and isMax:
+                            score += 500
+                        elif self.board[i][3*j] == self.minPlayer and not isMax:
+                            score += -100
+                    elif self.board[i][3*j + 2] == self.maxPlayer and isMax:
+                        score += 100
+                    elif self.board[i][3*j + 2] == self.minPlayer and not isMax:
+                        score += -500
+                elif self.board[i][3*j] == self.board[i][3*j + 2] and self.board[i][3*j] != '_':
+                    if self.board[i][3*j + 1] == '_':
+                        if self.board[i][3*j] == self.maxPlayer and isMax:
+                            score += 500
+                        elif self.board[i][3*j] == self.minPlayer and not isMax:
+                            score += -100
+                    elif self.board[i][3*j + 1] == self.maxPlayer and isMax:
+                        score += 100
+                    elif self.board[i][3*j + 1] == self.minPlayer and not isMax:
+                        score += -500
+                elif self.board[i][3*j + 1] == self.board[i][3*j + 2] and self.board[i][3*j + 1] != '_':
+                    if self.board[i][3*j] == '_':
+                        if self.board[i][3*j + 1] == self.maxPlayer and isMax:
+                            score += 500
+                        elif self.board[i][3*j + 1] == self.minPlayer and not isMax:
+                            score += -100
+                    elif self.board[i][3*j] == self.maxPlayer and isMax:
+                        score += 100
+                    elif self.board[i][3*j] == self.minPlayer and not isMax:
+                        score += -500
+        for i in range(3):
+            for j in range(3):
+                if self.board[3*j][3*i] == self.board[3*j + 1][3*i + 1] and self.board[3*j][3*i] != '_':
+                    if self.board[3*j + 2][3*i + 2] == '_':
+                        if self.board[3*j][3*i] == self.maxPlayer and isMax:
+                            score += 500
+                        elif self.board[3*j][3*i] == self.minPlayer and not isMax:
+                            score += -100
+                    elif self.board[3*j + 2][3*i + 2] == self.maxPlayer and isMax:
+                        score += 100
+                    elif self.board[3*j + 2][3*i + 2] == self.minPlayer and not isMax:
+                        score += -500
+                elif self.board[3*j][3*i] == self.board[3*j + 2][3*i + 2] and self.board[3*j][3*i] != '_':
+                    if self.board[3*j + 1][3*i + 1] == '_':
+                        if self.board[3*j][3*i] == self.maxPlayer and isMax:
+                            score += 500
+                        elif self.board[3*j][3*i] == self.minPlayer and not isMax:
+                            score += -100
+                    elif self.board[3*j + 1][3*i + 1] == self.maxPlayer and isMax:
+                        score += 100
+                    elif self.board[3*j + 1][3*i + 1] == self.minPlayer and not isMax:
+                        score += -500
+                elif self.board[3*j + 1][3*i + 1] == self.board[3*j + 2][3*i + 2] and self.board[3*j + 1][3*i + 1] != '_':
+                    if self.board[3*j][3*i] == '_':
+                        if self.board[3*j + 1][3*i + 1] == self.maxPlayer and isMax:
+                            score += 500
+                        elif self.board[3*j + 1][3*i + 1] == self.minPlayer and not isMax:
+                            score += -100
+                    elif self.board[3*j][3*i] == self.maxPlayer and isMax:
+                        score += 100
+                    elif self.board[3*j][3*i] == self.minPlayer and not isMax:
+                        score += -500
+
+                if self.board[3*j][3*i + 2] == self.board[3*j + 1][3*i + 1] and self.board[3*j][3*i + 2] != '_':
+                    if self.board[3*j + 2][3*i] == '_':
+                        if self.board[3*j][3*i + 2] == self.maxPlayer and isMax:
+                            score += 500
+                        elif self.board[3*j][3*i + 2] == self.minPlayer and not isMax:
+                            score += -100
+                    elif self.board[3*j + 2][3*i] == self.maxPlayer and isMax:
+                        score += 100
+                    elif self.board[3*j + 2][3*i] == self.minPlayer and not isMax:
+                        score += -500
+
+                elif self.board[3*j][3*i + 2] == self.board[3*j + 2][3*i] and self.board[3*j][3*i + 2] != '_':
+                    if self.board[3*j + 1][3*i + 1] == '_':
+                        if self.board[3*j][3*i + 2] == self.maxPlayer and isMax:
+                            score += 500
+                        elif self.board[3*j][3*i + 2] == self.minPlayer and not isMax:
+                            score += -100
+                    elif self.board[3*j + 1][3*i + 1] == self.maxPlayer and isMax:
+                        score += 100
+                    elif self.board[3*j + 1][3*i + 1] == self.minPlayer and not isMax:
+                        score += -500
+                elif self.board[3*j + 1][3*i + 1] == self.board[3*j + 2][3*i] and self.board[3*j + 1][3*i + 1] != '_':
+                    if self.board[3*j][3*i + 2] == '_':
+                        if self.board[3*j + 1][3*i + 1] == self.maxPlayer and isMax:
+                            score += 500
+                        elif self.board[3*j + 1][3*i + 1] == self.minPlayer and not isMax:
+                            score += -100
+                    elif self.board[3*j][3*i + 2] == self.maxPlayer and isMax:
+                        score += 100
+                    elif self.board[3*j][3*i + 2] == self.minPlayer and not isMax:
+                        score += -500
+
+        # if score != 0:
+        #     return score
+
+        # RULE 3: check corners
+        else:
+            cornerCount = 0
+            numX = 0
+            numO = 0
+            for i in range(3):
+                for j in range(3):
+                    for k in range(3):
+                        for l in range(3):
+                            if self.board[3*j + l][3*i + k] == self.maxPlayer and isMax:
+                                    numX += 1
+                            if self.board[3*j + l][3*i + k] == self.minPlayer and not isMax:
+                                    numO += 1
+                    if self.board[3*j][3*i] == self.maxPlayer and isMax:
+                        cornerCount += 1
+                    if self.board[3*j][3*i] == self.minPlayer and not isMax:
+                        cornerCount -= 1
+                    if self.board[3*j + 2][3*i + 2] == self.maxPlayer and isMax:
+                        cornerCount += 1
+                    if self.board[3*j + 2][3*i + 2] == self.minPlayer and not isMax:
+                        cornerCount -= 1
+                    if self.board[3*j + 2][3*i] == self.maxPlayer and isMax:
+                        cornerCount += 1
+                    if self.board[3*j + 2][3*i] == self.minPlayer and not isMax:
+                        cornerCount -= 1
+                    if self.board[3*j][3*i + 2] == self.maxPlayer and isMax:
+                        cornerCount += 1
+                    if self.board[3*j][3*i + 2] == self.minPlayer and not isMax:
+                        cornerCount -= 1
+            if isMax:
+                score += 30 * cornerCount# + 20 * (numX)
+            elif not isMax:
+                score += 30 * cornerCount# - 20 * (numO)
+            return score
         #YOUR CODE HERE
+        """
         score=0
         max_score = 0
         min_score = 0
@@ -476,6 +681,7 @@ class ultimateTicTacToe:
         self.twos = False
         score = max_score + min_score
         return score
+    """
 
 
     def evaluateLocalBoardDesigned(self, row_start, col_start, player):
