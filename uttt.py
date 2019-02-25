@@ -38,7 +38,8 @@ class ultimateTicTacToe:
         self.preventThreeInARowMinUtility=-500
         self.cornerMinUtility=-30
 
-        self.expandedNodes=0
+        self.expandedNodes=[]
+        self.currExpandedNodes=0
         self.currPlayer=True
         self.twos = False
 
@@ -587,7 +588,7 @@ class ultimateTicTacToe:
                 for j in range(0, 3):
                     if self.board[i + startIndex[0]][j + startIndex[1]] == '_':
                         self.board[i + startIndex[0]][j + startIndex[1]] = self.maxPlayer
-                        self.expandedNodes += 1
+                        self.currExpandedNodes += 1
                         currValue = self.alphabeta(depth + 1, (3*j) + i, alpha, beta, not isMax)
                         if (currValue > bestValue) and depth == 0:
                             self.bestMove = (startIndex[0] + i, startIndex[1] + j)
@@ -604,7 +605,7 @@ class ultimateTicTacToe:
                 for j in range(0, 3):
                     if self.board[i + startIndex[0]][j + startIndex[1]] == '_':
                         self.board[i + startIndex[0]][j + startIndex[1]] = self.minPlayer
-                        self.expandedNodes += 1
+                        self.currExpandedNodes += 1
                         currValue = self.alphabeta(depth + 1, (3*j) + i, alpha, beta, not isMax)
                         if currValue < bestValue and depth == 0:
                             self.bestMove = (startIndex[0] + i, startIndex[1] + j)
@@ -638,7 +639,6 @@ class ultimateTicTacToe:
                 for j in range(0, 3):
                     if self.board[i + startIndex[0]][j + startIndex[1]] == '_':
                         self.board[i + startIndex[0]][j + startIndex[1]] = self.maxPlayer
-                        self.expandedNodes += 1
                         currValue = self.alphabeta(depth + 1, (3*j) + i, alpha, beta, not isMax)
                         if (currValue > bestValue) and depth == 0:
                             self.bestMove = (startIndex[0] + i, startIndex[1] + j)
@@ -655,7 +655,6 @@ class ultimateTicTacToe:
                 for j in range(0, 3):
                     if self.board[i + startIndex[0]][j + startIndex[1]] == '_':
                         self.board[i + startIndex[0]][j + startIndex[1]] = self.minPlayer
-                        self.expandedNodes += 1
                         currValue = self.alphabeta(depth + 1, (3*j) + i, alpha, beta, not isMax)
                         if currValue < bestValue and depth == 0:
                             self.bestMove = (startIndex[0] + i, startIndex[1] + j)
@@ -690,7 +689,7 @@ class ultimateTicTacToe:
                 for j in range(0, 3):
                     if self.board[i + startIndex[0]][j + startIndex[1]] == '_':
                         self.board[i + startIndex[0]][j + startIndex[1]] = self.maxPlayer
-                        self.expandedNodes += 1
+                        self.currExpandedNodes += 1
                         currValue = self.minimax(depth + 1, (3*j) + i, not isMax)
                         if currValue > bestValue and depth == 0:
                             self.bestMove = (startIndex[0] + i, startIndex[1] + j)
@@ -705,7 +704,7 @@ class ultimateTicTacToe:
                 for j in range(0, 3):
                     if self.board[i + startIndex[0]][j + startIndex[1]] == '_':
                         self.board[i + startIndex[0]][j + startIndex[1]] = self.minPlayer
-                        self.expandedNodes += 1
+                        self.currExpandedNodes += 1
                         currValue = self.minimax(depth + 1, (3*j) + i, not isMax)
                         if currValue < bestValue and depth == 0:
                             self.bestMove = (startIndex[0] + i, startIndex[1] + j)
@@ -816,7 +815,8 @@ class ultimateTicTacToe:
                 print("Min Player score: ")
                 print(self.evaluatePredifined(not self.currPlayer)) 
                 """
-                expNodesList.append(self.expandedNodes)
+                self.expandedNodes.append(self.currExpandedNodes)
+                self.currExpandedNodes = 0 
                 bestValue.append(bestMoveVal)
                 self.board[self.bestMove[0]][self.bestMove[1]] = self.maxPlayer
                 gameBoards.append(self.board)
@@ -837,7 +837,8 @@ class ultimateTicTacToe:
                 print("Min Player score: ")
                 print(self.evaluatePredifined(self.currPlayer)) 
                 """
-                expNodesList.append(self.expandedNodes)  
+                self.expandedNodes.append(self.currExpandedNodes)
+                self.currExpandedNodes = 0  
                 bestValue.append(bestMoveVal)
                 self.board[self.bestMove[0]][self.bestMove[1]] = self.minPlayer
                 gameBoards.append(self.board)
@@ -887,7 +888,7 @@ class ultimateTicTacToe:
                 print("Min Player score: ")
                 print(self.evaluatePredifined(not self.currPlayer)) 
                 """
-                expNodesList.append(self.expandedNodes)
+                self.expandedNodes.append(self.currExpandedNodes)
                 bestValue.append(bestMoveVal)
                 self.board[self.bestMove[0]][self.bestMove[1]] = self.maxPlayer
                 gameBoards.append(self.board)
@@ -904,7 +905,8 @@ class ultimateTicTacToe:
                 print("Min Player score: ")
                 print(self.evaluatePredifined(self.currPlayer)) 
                 """
-                expNodesList.append(self.expandedNodes)  
+                self.expandedNodes.append(self.currExpandedNodes)  
+                self.currExpandedNodes = 0
                 bestValue.append(bestMoveVal)
                 self.board[self.bestMove[0]][self.bestMove[1]] = self.minPlayer
                 gameBoards.append(self.board)
@@ -931,8 +933,8 @@ class ultimateTicTacToe:
 
 if __name__=="__main__":
     uttt=ultimateTicTacToe()
-    # gameBoards, bestMove, expNodesList, bestValue, winner=uttt.playGamePredifinedAgent(True,False,False)
-    gameBoard, bestMove, expNodesList, bestValue, winner = uttt.playGameYourAgent()
+    gameBoards, bestMove, expNodesList, bestValue, winner=uttt.playGamePredifinedAgent(True,True,True)
+    # gameBoard, bestMove, expNodesList, bestValue, winner = uttt.playGameYourAgent()
     print("The number of expanded nodes: ")
     print(uttt.expandedNodes)
     if winner == 1:
