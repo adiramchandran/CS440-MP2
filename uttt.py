@@ -350,34 +350,34 @@ class ultimateTicTacToe:
         # checking V pattern
         num_vs = 0
         if (self.board[row_start][col_start] == self.board[row_start][col_start+2] == self.board[row_start+1][col_start+1] == player and self.board[row_start][col_start+1] == self.board[row_start+2][col_start] == self.board[row_start+2][col_start+2] == '_'):
-            return 20000
+            return 2000
         if (self.board[row_start][col_start] == self.board[row_start+1][col_start+1] == self.board[row_start+2][col_start] == player and self.board[row_start+1][col_start] == self.board[row_start][col_start+2] == self.board[row_start+2][col_start+2] == '_'):
-            return 20000
+            return 2000
         if (self.board[row_start][col_start+2] == self.board[row_start+1][col_start+1] == self.board[row_start+2][col_start+2] == player and self.board[row_start+1][col_start+2] == self.board[row_start][col_start] == self.board[row_start+2][col_start] == '_'):
-            return 20000
+            return 2000
         if (self.board[row_start+1][col_start+1] == self.board[row_start+2][col_start] == self.board[row_start+2][col_start+2] == player and self.board[row_start][col_start] == self.board[row_start][col_start+2] == self.board[row_start+2][col_start+1] == '_'):
-            return 20000
+            return 2000
 
         if (self.board[row_start][col_start] == self.board[row_start][col_start+2] == self.board[row_start+1][col_start+1] == player and self.board[row_start][col_start+1] != '_' and self.board[row_start+2][col_start] == self.board[row_start+2][col_start+2] == '_'):
-            return 10000 
+            return 1000 
         if (self.board[row_start][col_start] == self.board[row_start][col_start+2] == self.board[row_start+1][col_start+1] == player and self.board[row_start][col_start+1] == '_' and self.board[row_start+2][col_start] != '_' and self.board[row_start+2][col_start+2] == '_'):
-            return 10000
+            return 1000
         if (self.board[row_start][col_start] == self.board[row_start][col_start+2] == self.board[row_start+1][col_start+1] == player and self.board[row_start][col_start+1] == self.board[row_start+2][col_start] == '_' and self.board[row_start+2][col_start+2] != '_'):
-            return 10000
+            return 1000
 
         if (self.board[row_start][col_start] == self.board[row_start+1][col_start+1] == self.board[row_start+2][col_start] == player and self.board[row_start+1][col_start] != '_' and self.board[row_start][col_start+2] == self.board[row_start+2][col_start+2] == '_'):
-            return 10000
+            return 1000
         if (self.board[row_start][col_start] == self.board[row_start+1][col_start+1] == self.board[row_start+2][col_start] == player and self.board[row_start+1][col_start] == '_' and self.board[row_start][col_start+2] != '_' and self.board[row_start+2][col_start+2] == '_'):
-            return 10000
+            return 1000
         if (self.board[row_start][col_start] == self.board[row_start+1][col_start+1] == self.board[row_start+2][col_start] == player and self.board[row_start+1][col_start] == self.board[row_start][col_start+2] == '_' and self.board[row_start+2][col_start+2] != '_'):
-            return 10000
+            return 1000
 
         if (self.board[row_start][col_start+2] == self.board[row_start+1][col_start+1] == self.board[row_start+2][col_start+2] == player and self.board[row_start+1][col_start+2] != '_' and self.board[row_start][col_start] == self.board[row_start+2][col_start] == '_'):
-            return 10000
+            return 1000
         if (self.board[row_start][col_start+2] == self.board[row_start+1][col_start+1] == self.board[row_start+2][col_start+2] == player and self.board[row_start+1][col_start+2] == '_' and self.board[row_start][col_start] != '_' and self.board[row_start+2][col_start] == '_'):
-            return 10000
+            return 1000
         if (self.board[row_start][col_start+2] == self.board[row_start+1][col_start+1] == self.board[row_start+2][col_start+2] == player and self.board[row_start+1][col_start+2] == self.board[row_start][col_start] == '_' and self.board[row_start+2][col_start] != '_'):
-            return 10000
+            return 1000
 
         if (self.board[row_start+1][col_start+1] == self.board[row_start+2][col_start] == self.board[row_start+2][col_start+2] == player and self.board[row_start][col_start] != '_' and self.board[row_start][col_start+2] == self.board[row_start+2][col_start+1] == '_'):
             return 10000
