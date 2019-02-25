@@ -1250,8 +1250,8 @@ class ultimateTicTacToe:
             else:
                 bestMoveVal = self.ownalphabeta(0, currIdx, float('-inf'), float('inf'), self.currPlayer)
                 top_left = self.getTopLeft(currIdx)
-                currIdx = self.getBoardIdx(top_left, self.bestMove)
                 bestMoveArr.append(self.bestMove)
+                currIdx = self.getBoardIdx(top_left, self.bestMove)
                 """
                 print("Max player score: ")   
                 print(self.evaluatePredefined(not self.currPlayer))   
@@ -1303,9 +1303,8 @@ class ultimateTicTacToe:
                 print("Your turn! Enter a valid move on board " + str(currIdx))
                 x_coord = int(input("Enter x coordinate (0-8): "))
                 y_coord = int(input("Enter y coordinate (0-8): "))
-                self.bestMove = (x_coord, y_coord)
+                self.bestMove = (x_coord + self.getTopLeft(currIdx)[0], y_coord + self.getTopLeft(currIdx)[1])
                 self.board[self.bestMove[0]][self.bestMove[1]] = self.maxPlayer
-                self.printGameBoard()
                 print("Move made!")
                 bestMoveVal = self.evaluatePredefined(self.currPlayer)
                 top_left = self.getTopLeft(currIdx)
@@ -1322,6 +1321,7 @@ class ultimateTicTacToe:
                 gameBoards.append(self.board)
                 self.currPlayer = not self.currPlayer
             else:
+                self.printGameBoard()
                 bestMoveVal = self.ownalphabeta(0, currIdx, float('-inf'), float('inf'), self.currPlayer)
                 top_left = self.getTopLeft(currIdx)
                 currIdx = self.getBoardIdx(top_left, self.bestMove)
@@ -1346,7 +1346,7 @@ if __name__=="__main__":
     uttt=ultimateTicTacToe()
     # gameBoards, bestMove, expNodesList, bestValue, winner=uttt.playGamePredifinedAgent(0,0,1)
     # gameBoard, bestMove, expNodesList, bestValue, winner = uttt.playGameYourAgent()
-    uttt.playGameHuman()
+    gameBoard, bestMove, expNodesList, bestValue, winner = uttt.playGameHuman()
     print("The best value array is: ")
     print(bestValue)
     print("The number of expanded nodes: ")
