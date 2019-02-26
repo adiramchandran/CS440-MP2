@@ -427,20 +427,18 @@ class ultimateTicTacToe:
                 h_0 = 3*horiz
                 h_1 = 3*horiz + 1
                 h_2 = 3*horiz + 2
-                if self.board[v_0][h_0] == self.board[v_1][h_1] and self.board[v_0][h_0] == self.board[v_2][h_2]:
-                    if self.board[v_0][h_0] == self.maxPlayer:
-                        score = 10000
-                        return score
-                    elif self.board[v_0][h_0] == self.minPlayer:
-                        score = -10000
-                        return score
-                if self.board[v_0][h_2] == self.board[v_1][h_1] and self.board[v_0][h_2] == self.board[v_2][h_0]:
-                    if self.board[v_0][h_2] == self.maxPlayer:
-                        score = 10000
-                        return score
-                    elif self.board[v_0][h_2] == self.minPlayer:
-                        score = -10000
-                        return score
+                if self.board[v_0][h_0] == self.board[v_1][h_1] and self.board[v_0][h_0] == self.board[v_2][h_2] and self.board[v_0][h_0] == self.maxPlayer:
+                    score = 10000
+                    return score
+                elif self.board[v_0][h_0] == self.board[v_1][h_1] and self.board[v_0][h_0] == self.board[v_2][h_2] and self.board[v_0][h_0] == self.minPlayer:
+                    score = -10000
+                    return score
+                if self.board[v_0][h_2] == self.board[v_1][h_1] and self.board[v_0][h_2] == self.board[v_2][h_0] and self.board[v_0][h_2] == self.maxPlayer:
+                    score = 10000
+                    return score
+                elif self.board[v_0][h_2] == self.board[v_1][h_1] and self.board[v_0][h_2] == self.board[v_2][h_0] and self.board[v_0][h_2] == self.minPlayer:
+                    score = -10000
+                    return score
         
         # winning row or column
         for horiz in range(9):
@@ -1093,28 +1091,30 @@ class ultimateTicTacToe:
 
 if __name__=="__main__":
     uttt=ultimateTicTacToe()
-    # gameBoards, bestMove, expNodesList, bestValue, winner=uttt.playGamePredifinedAgent(1,0,1)
-    gameBoard, bestMove, expNodesList, bestValue, winner = uttt.playGameYourAgent()
+    gameBoards, bestMove, expNodesList, bestValue, winner=uttt.playGamePredifinedAgent(1,1,1)
+    # gameBoard, bestMove, expNodesList, bestValue, winner = uttt.playGameYourAgent()
     #gameBoard, bestMove, expNodesList, bestValue, winner = uttt.playGameHuman()
-    
-    # max_wins = 0
-    # min_wins = 0
-    # for i in range(20):
-    #     uttt=ultimateTicTacToe()
-    #     gameBoard, bestMove, expNodesList, bestValue, winner = uttt.playGameYourAgent()
-    #     uttt.printGameBoard()
-    #     if winner == 1:
-    #         max_wins += 1
-    #     elif winner == -1:
-    #         min_wins += 1
-    # print ("max won ",max_wins," times")
-    # print("min won ",min_wins," times")
+    """
+    max_wins = 0
+    min_wins = 0
+    for i in range(20):
+        uttt=ultimateTicTacToe()
+        gameBoard, bestMove, expNodesList, bestValue, winner = uttt.playGameYourAgent()
+        uttt.printGameBoard()
+        if winner == 1:
+            max_wins += 1
+        elif winner == -1:
+            min_wins += 1
+        print("Expanded Nodes: ", sum(uttt.expandedNodes))
+    print ("max won ",max_wins," times")
+    print("min won ",min_wins," times")
+    """
     
     
     print("The best value array is: ")
     print(bestValue)
     print("The number of expanded nodes: ")
-    print(uttt.expandedNodes)
+    print(sum(uttt.expandedNodes))
     if winner == 1:
         uttt.printGameBoard()
         print("The winner is maxPlayer!!!")
@@ -1123,3 +1123,4 @@ if __name__=="__main__":
         print("The winner is minPlayer!!!")
     else:
         print("Tie. No winner:(")
+    
