@@ -736,6 +736,7 @@ class ultimateTicTacToe:
                 for j in range(0, 3):
                     if self.board[i + startIndex[0]][j + startIndex[1]] == '_':
                         self.board[i + startIndex[0]][j + startIndex[1]] = self.maxPlayer
+                        self.currExpandedNodes += 1
                         currValue = self.ownalphabeta(depth + 1, (3*j) + i, alpha, beta, not isMax)
                         if (currValue > bestValue) and depth == 0:
                             self.bestMove = (startIndex[0] + i, startIndex[1] + j)
@@ -752,6 +753,7 @@ class ultimateTicTacToe:
                 for j in range(0, 3):
                     if self.board[i + startIndex[0]][j + startIndex[1]] == '_':
                         self.board[i + startIndex[0]][j + startIndex[1]] = self.minPlayer
+                        self.currExpandedNodes += 1
                         currValue = self.ownalphabeta(depth + 1, (3*j) + i, alpha, beta, not isMax)
                         if currValue < bestValue and depth == 0:
                             self.bestMove = (startIndex[0] + i, startIndex[1] + j)
@@ -1026,8 +1028,10 @@ class ultimateTicTacToe:
         gameBoards=[]
         bestMoveArr=[]
         expNodesList = []
-        currIdx = 4 # randint(0, 8)
-        firstPlayer = 1 # randint(0, 1)      # 0 is own agent, 1 is predefined offensive agent
+        currIdx = randint(0, 8)
+        firstPlayer = randint(0, 1)
+        # currIdx = 4 # randint(0, 8)
+        # firstPlayer = 1 # randint(0, 1)      # 0 is own agent, 1 is predefined offensive agent
         winner = 0
 
         if firstPlayer:
@@ -1061,6 +1065,7 @@ class ultimateTicTacToe:
                 print(self.evaluatePredefined(not self.currPlayer)) 
                 """
                 self.expandedNodes.append(self.currExpandedNodes)
+                self.currExpandedNodes = 0
                 bestValue.append(bestMoveVal)
                 gameBoards.append(self.board)
                 self.currPlayer = not self.currPlayer
@@ -1076,7 +1081,7 @@ class ultimateTicTacToe:
                 print("Min Player score: ")
                 print(self.evaluatePredefined(self.currPlayer)) 
                 """
-                self.expandedNodes.append(self.currExpandedNodes)  
+                self.expandedNodes.append(self.currExpandedNodes)
                 self.currExpandedNodes = 0
                 bestValue.append(bestMoveVal)
                 self.board[self.bestMove[0]][self.bestMove[1]] = self.minPlayer
@@ -1088,24 +1093,24 @@ class ultimateTicTacToe:
 
 if __name__=="__main__":
     uttt=ultimateTicTacToe()
-    # gameBoards, bestMove, expNodesList, bestValue, winner=uttt.playGamePredifinedAgent(0,0,1)
+    # gameBoards, bestMove, expNodesList, bestValue, winner=uttt.playGamePredifinedAgent(1,0,1)
     #gameBoard, bestMove, expNodesList, bestValue, winner = uttt.playGameYourAgent()
-    # gameBoard, bestMove, expNodesList, bestValue, winner = uttt.playGameHuman()
+    gameBoard, bestMove, expNodesList, bestValue, winner = uttt.playGameHuman()
     
-    max_wins = 0
-    min_wins = 0
-    for i in range(20):
-        uttt=ultimateTicTacToe()
-        gameBoard, bestMove, expNodesList, bestValue, winner = uttt.playGameYourAgent()
-        if winner == 1:
-            max_wins += 1
-        elif winner == -1:
-            min_wins += 1
-    print ("max won ",max_wins," times")
-    print("min won ",min_wins," times")
+    # max_wins = 0
+    # min_wins = 0
+    # for i in range(20):
+    #     uttt=ultimateTicTacToe()
+    #     gameBoard, bestMove, expNodesList, bestValue, winner = uttt.playGameYourAgent()
+    #     uttt.printGameBoard()
+    #     if winner == 1:
+    #         max_wins += 1
+    #     elif winner == -1:
+    #         min_wins += 1
+    # print ("max won ",max_wins," times")
+    # print("min won ",min_wins," times")
     
     
-    """
     print("The best value array is: ")
     print(bestValue)
     print("The number of expanded nodes: ")
@@ -1118,4 +1123,3 @@ if __name__=="__main__":
         print("The winner is minPlayer!!!")
     else:
         print("Tie. No winner:(")
-    """
