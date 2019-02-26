@@ -178,17 +178,17 @@ def get_pent_idx(pent):
     """
     Returns the index of a pentomino.
     """
-    pidx = 0
+    index = 0
     for i in range(pent.shape[0]):
         for j in range(pent.shape[1]):
             if pent[i][j] != 0:
-                pidx = pent[i][j]
+                index = pent[i][j]
                 break
-        if pidx != 0:
+        if index != 0:
             break
-    if pidx == 0:
+    if index == 0:
         return -1
-    return pidx - 1
+    return index - 1
 
 
 def can_add_pentomino(board, pent, coord):
