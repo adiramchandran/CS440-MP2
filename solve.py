@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 import numpy as np
-#               F  I  L  N  P  T  U  V  W  X  Y  Z
-orientations = [8, 2, 8, 8, 8, 4, 4, 4, 4, 1, 8, 4]
+#   
 final_board = None
 prev_constraints = {}
 prev_choices = {}
 pent_orients = []
+orientation_types = ['F', 'I', 'L', 'N', 'P', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']            
+orientations = [8, 2, 8, 8, 8, 4, 4, 4, 4, 1, 8, 4]
 
 
 def solve(board, pents):
@@ -29,13 +30,13 @@ def solve(board, pents):
     constraints = {}                # maps from potential top left (row, col) coordinate to list of tuples (pent idx, unique orientation)
     
     for pent in pents:
-        pent_orients.append(findOrientations(pent, get_pent_idx(pent)))
+        pent_orients.append(find_orientations(pent, get_pent_idx(pent)))
     # pent_orients should have all the possible pentominoes for the given pent_idx
 
     i = 0 
     for pent in pents:
         pent_idx = get_pent_idx(pent)
-        for orient in findOrientations(pent, pent_idx):                 # each orientation in the orientation list for a certain pentonmino
+        for orient in find_orientations(pent, pent_idx):                 # each orientation in the orientation list for a certain pentonmino
             for row in range(board.shape[0]):
                 for col in range(board.shape[1]):
                     if can_add_pentomino(board, orient, (row, col)):    # check if we can add a pentomino starting at the given (row, col)
@@ -142,58 +143,35 @@ def alg_back(board, choices, constraints):
 
     return ret, board_ret
 
-# find next pentomino
-def getNextVar(list):
-    # sort based on MRV
-    list = sorted(list, key=lambda key: len(list.get(key)))
+def find_orientations(pent, pent_idx):
+    orients = []
+    pent_orients_num = orientations[pent_idx]
 
-    if len(list) != 0:
-        return list[0]
-
-    return None
-
-def mrvSort(elem):
-    print(self.get(elem))
-    return len(elem[1])
-
-
-def orderValues(var, assignment, pents):
-    return None
-
-def findOrientations(pent, pent_idx):
-    positions = []
-    numofOrient = orientations[pent_idx]
-
-    # F,L,N,P,Y (4 rotations, 4 flipped)
-    if numofOrient == 8:
+    if pent_orients_num == 8:
         for i in range(4):
-            positions.append(np.rot90(pent, i))
+            orients.append(np.rot90(pent, i))
         pent = np.flip(pent, 0)
         for i in range(4):
-            positions.append(np.rot90(pent, i))
+            orients.append(np.rot90(pent, i))
 
-    elif numofOrient == 4:
-        # Z (1 rotation, 1 flipped)
+    elif pent_orients_num == 4:
         if pent_idx == len(orientations) - 1:
             for i in range(2):
-                positions.append(np.rot90(pent, i))
+                orients.append(np.rot90(pent, i))
             pent = np.flip(pent, 0)
             for i in range(2):
-                positions.append(np.rot90(pent, i))
+                orients.append(np.rot90(pent, i))
 
-        # T, U, V, W (4 rotations)
         else:
             for i in range(4):
-                positions.append(np.rot90(pent, i))
-    # I (2 rotations)
-    elif numofOrient == 2:
+                orients.append(np.rot90(pent, i))
+    elif pent_orients_num == 2:
         for i in range(2):
-            positions.append(np.rot90(pent, i))
-    # X (no rotations/flips)
+            orients.append(np.rot90(pent, i))
     else:
-        positions.append(pent)
+        orients.append(pent)
 
-    return positions
+    return orients
 
 
 def get_pent_idx(pent):
@@ -211,25 +189,6 @@ def get_pent_idx(pent):
     if pidx == 0:
         return -1
     return pidx - 1
-
-
-def getCoords(board):
-    """
-    Returns the next available square on the board.
-    """
-    found = False
-    coord = (0,0)
-    for i in range(board.shape[0]):
-        for j in range(board.shape[1]):
-            if board[i][j] == -1:
-                found = True
-                coord = (i, j)
-                break
-        if found == True:
-            break
-    if found == False:
-        return -1
-    return coord
 
 
 def can_add_pentomino(board, pent, coord):
@@ -252,56 +211,3 @@ def can_add_pentomino(board, pent, coord):
                     if board[coord[0]+row][coord[1]+col] != -1: # Overlap
                         return False
     return True
-
-def add_pentomino(board, pent, coord):
-    """
-    Adds a pentomino pent to the board. The pentomino will be placed such that
-    coord[0] is the lowest row index of the pent and coord[1] is the lowest 
-    column index. 
-    
-    check_pent will also check if the pentomino is part of the valid pentominos.
-    """
-
-    for row in range(pent.shape[0]):
-        for col in range(pent.shape[1]):
-            if pent[row][col] != 0:
-                if board[coord[0]+row][coord[1]+col] != 0: # Overlap
-                    return False
-                else:
-                    board[coord[0]+row][coord[1]+col] = pent[row][col]
-    return True
-
-def remove_pentomino(board, pent_idx):
-    board[board==pent_idx+1] = -1
-
-
-
-
-
-
-
-
-
-
-
-
-# # -*- coding: utf-8 -*-
-# import numpy as np
-# #               F  I  L  N  P  T  U  V  W  X  Y  Z
-# orientations = [8, 2, 8, 8, 8, 4, 4, 4, 4, 1, 8, 4]
-
-# def solve(board, pents):
-#     """
-#     This is the function you will implement. It will take in a numpy array of the board
-#     as well as a list of n tiles in the form of numpy arrays. The solution returned
-#     is of the form [(p1, (row1, col1))...(pn,  (rown, coln))]
-#     where pi is a tile (may be rotated or flipped), and (rowi, coli) is 
-#     the coordinate of the upper left corner of pi in the board (lowest row and column index 
-#     that the tile covers).
-    
-#     -Use np.flip and np.rot90 to manipulate pentominos.
-    
-#     -You can assume there will always be a solution.
-#     """
-    
-#     raise NotImplementedError
