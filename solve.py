@@ -147,13 +147,11 @@ def find_orientations(pent, pent_idx):
     orients = []
     pent_orients_num = orientations[pent_idx]
 
-    if pent_orients_num == 8:
-        for i in range(4):
+    if pent_orients_num == 1:
+        orients.append(pent)
+    elif pent_orients_num == 2:
+        for i in range(2):
             orients.append(np.rot90(pent, i))
-        pent = np.flip(pent, 0)
-        for i in range(4):
-            orients.append(np.rot90(pent, i))
-
     elif pent_orients_num == 4:
         if pent_idx == len(orientations) - 1:
             for i in range(2):
@@ -165,11 +163,12 @@ def find_orientations(pent, pent_idx):
         else:
             for i in range(4):
                 orients.append(np.rot90(pent, i))
-    elif pent_orients_num == 2:
-        for i in range(2):
+    elif pent_orients_num == 8:
+        for i in range(4):
             orients.append(np.rot90(pent, i))
-    else:
-        orients.append(pent)
+        pent = np.flip(pent, 0)
+        for i in range(4):
+            orients.append(np.rot90(pent, i))
 
     return orients
 
