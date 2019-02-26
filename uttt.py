@@ -1094,8 +1094,8 @@ class ultimateTicTacToe:
 if __name__=="__main__":
     uttt=ultimateTicTacToe()
     # gameBoards, bestMove, expNodesList, bestValue, winner=uttt.playGamePredifinedAgent(1,0,1)
-    #gameBoard, bestMove, expNodesList, bestValue, winner = uttt.playGameYourAgent()
-    gameBoard, bestMove, expNodesList, bestValue, winner = uttt.playGameHuman()
+    gameBoard, bestMove, expNodesList, bestValue, winner = uttt.playGameYourAgent()
+    #gameBoard, bestMove, expNodesList, bestValue, winner = uttt.playGameHuman()
     
     # max_wins = 0
     # min_wins = 0
