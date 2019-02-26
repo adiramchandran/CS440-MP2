@@ -1114,7 +1114,7 @@ if __name__=="__main__":
     print("The best value array is: ")
     print(bestValue)
     print("The number of expanded nodes: ")
-    print(sum(uttt.expandedNodes))
+    print(uttt.expandedNodes)
     if winner == 1:
         uttt.printGameBoard()
         print("The winner is maxPlayer!!!")
