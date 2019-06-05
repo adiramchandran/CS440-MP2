@@ -1,4 +1,4 @@
-# CS440-MP2
+# Minimax and Alphabeta Algorithms
 
 Part 1: Pentominos
 We are given a rectangular board with 1s and 0s. Fill the board with pentominos such that all 1s
